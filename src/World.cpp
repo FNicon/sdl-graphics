@@ -1,0 +1,98 @@
+#include "World.h"
+
+#include "RawPixel.h"
+
+using namespace std;
+
+/* Private access */
+
+// Flush World's buffer to SDL's buffer
+void World::flush()
+{
+    size_t SDL_width = display->width;
+    size_t SDL_height = display->height;
+
+    Pixel background(0, 0, -100);
+    Pixel pix;
+    unsigned int world_row, world_col, hex;
+
+    for(size_t SDL_row = 0; SDL_row < SDL_height; SDL_row++)
+    {
+        for(size_t SDL_col = 0; SDL_col < SDL_width; SDL_col++)
+        {
+            world_row = SDL_origin_row + (unsigned int) SDL_row;
+            world_col = SDL_origin_col + (unsigned int) SDL_col;
+            pix = buffer.get(world_row, world_col);
+
+            if(pix == background) display->set(SDL_row, SDL_col, RawPixel(0x0));
+            else
+            {
+                hex = (pix.r << 24) + (pix.g << 16) + (pix.b << 8) + pix.a;
+                display->set(SDL_row, SDL_col, RawPixel(hex));
+            }
+        }
+    }
+}
+
+// Reset World's buffer
+void World::reset()
+{
+    for(size_t row = 0; row < height; row++)
+    {
+        for(size_t col = 0; col < width; col++)
+        {
+            buffer.set(row, col, Pixel(0, 0, -100));
+        }
+    }
+}
+
+/* Public access */
+
+// Constructors
+World::World(size_t _width, size_t _height, unsigned int _SDL_origin_row, unsigned int _SDL_origin_col) : buffer(_width, _height)
+{
+    width = _width;
+    height = _height;
+    SDL_origin_row = _SDL_origin_row;
+    SDL_origin_col = _SDL_origin_col;
+
+    reset();
+}
+
+World::World(size_t _width, size_t _height, unsigned int _SDL_origin_row, unsigned int _SDL_origin_col, unsigned int _viewport_row, unsigned int _viewport_col) : buffer(_width, _height)
+{
+    width = _width;
+    height = _height;
+    SDL_origin_row = _SDL_origin_row;
+    SDL_origin_col = _SDL_origin_col;
+    viewport = true;
+    viewport_row = _viewport_row;
+    viewport_col = _viewport_col;
+
+    reset();
+}
+
+// Getter, coordinate relative to SDL display origin point
+Pixel World::get(size_t _row, size_t _col)
+{
+    unsigned int world_row = _row + SDL_origin_row;
+    unsigned int world_col = _col + SDL_origin_col;
+
+    return buffer.get(world_row, world_col);
+}
+
+// Setter, coordinate relative to SDL display origin point
+void World::set(size_t _row, size_t _col, Pixel _pixel)
+{
+    unsigned int world_row = _row + SDL_origin_row;
+    unsigned int world_col = _col + SDL_origin_col;
+
+    buffer.set(world_row, world_col, _pixel);
+}
+
+// Render
+void World::render()
+{
+    flush();
+    display->render();
+}
