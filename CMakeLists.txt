@@ -9,12 +9,12 @@ find_package (PkgConfig REQUIRED)
 pkg_check_modules (SDL2 sdl2)
 
 # SDL2
-#if (SDL2_FOUND)
-  #add_definitions(-DSDL2)
+if (SDL2_FOUND)
+  add_definitions(-DSDL2)
 
-  #link_libraries (${SDL2_LIBRARIES})
-  #include_directories (PUBLIC ${SDL2_INCLUDE_DIRS})
-  #add_compile_options (${SDL2_CFLAGS_OTHER})
-#endif ()
+  link_libraries (${SDL2_LIBRARIES})
+  include_directories (PUBLIC ${SDL2_INCLUDE_DIRS})
+  add_compile_options (${SDL2_CFLAGS_OTHER})
+endif ()
 
 add_subdirectory (src)
