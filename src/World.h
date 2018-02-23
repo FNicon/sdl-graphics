@@ -44,6 +44,6 @@ class World
         // Setter, coordinate relative to SDL display origin point
         void set(size_t _row, size_t _col, Pixel _pixel);
 
-        // Render (sort by layer, clipping, floodfill, write to buffer, copy to SDL's buffer, invoke SDL's render)
+        // Render (sort by layer, transform, clipping, floodfill, write to buffer, copy to SDL's buffer, invoke SDL's render)
         void render();
 };
