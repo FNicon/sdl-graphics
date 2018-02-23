@@ -5,6 +5,7 @@
 #include "SDLDisplay.h"
 #include "Polygon.h"
 #include "ITransform.h"
+#include "Viewport.h"
 
 #include <utility>
 
@@ -36,8 +37,8 @@ class World
         unsigned int SDL_origin_row;
         unsigned int SDL_origin_col;
 
-        // Use viewport?
-        bool viewport = false;
+        // Pointer to Viewport
+        Viewport* viewport = nullptr;
 
         // Viewport's origin point relative to SDL display
         unsigned int viewport_row;

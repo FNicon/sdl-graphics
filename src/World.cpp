@@ -46,7 +46,28 @@ void World::flush()
 
     Pixel background(0, 0, -100);
     Pixel pix;
+
     unsigned int world_row, world_col, hex;
+    unsigned int world_viewport_row, world_viewport_col;
+
+    unsigned int viewport_x_max, viewport_x_min, viewport_y_max, viewport_y_min;
+    size_t viewport_width, viewport_height;
+    unsigned int viewport_thickness;
+
+    if(viewport != nullptr)
+    {
+        size_t viewport_width = viewport->width;
+        size_t viewport_height = viewport->height;
+        unsigned int viewport_thickness = viewport->border_thickness;
+
+        world_viewport_row = SDL_origin_row + viewport_row;
+        world_viewport_col = SDL_origin_col + viewport_col;
+
+        viewport_x_min = world_viewport_col - viewport_thickness;
+        viewport_y_min = world_viewport_row - viewport_thickness;
+        viewport_x_max = world_viewport_col + viewport_width;
+        viewport_y_max = world_viewport_row + viewport_height;
+    }
 
     for(size_t SDL_row = 0; SDL_row < SDL_height; SDL_row++)
     {
@@ -54,13 +75,38 @@ void World::flush()
         {
             world_row = SDL_origin_row + (unsigned int) SDL_row;
             world_col = SDL_origin_col + (unsigned int) SDL_col;
-            pix = buffer.get(world_row, world_col);
 
-            if(pix == background) display->set(SDL_row, SDL_col, RawPixel(0x0));
+            if(viewport != nullptr)
+            {
+                // Inside viewport
+                if(world_row > viewport_y_min && world_row < viewport_y_max && world_col > viewport_x_min && world_col < viewport_x_max)
+                {
+                    pix = buffer.get(world_row, world_col);
+
+                    hex = (pix.r << 24) + (pix.g << 16) + (pix.b << 8) + pix.a;
+                    display->set(SDL_row, SDL_col, RawPixel(hex));
+                }
+                // Outside viewport
+                else if(world_row < viewport_y_min || world_row > (viewport_y_max + viewport_thickness) || world_col < viewport_x_min || world_col > (viewport_x_max + viewport_thickness))
+                {
+                    display->set(SDL_row, SDL_col, RawPixel(0x0));
+                }
+                else // Viewport border
+                {
+                    hex = (viewport->border_color << 8) + viewport->border_alpha;
+                    display->set(SDL_row, SDL_col, RawPixel(hex));
+                }
+            }
             else
             {
-                hex = (pix.r << 24) + (pix.g << 16) + (pix.b << 8) + pix.a;
-                display->set(SDL_row, SDL_col, RawPixel(hex));
+                pix = buffer.get(world_row, world_col);
+
+                if(pix == background) display->set(SDL_row, SDL_col, RawPixel(0x0));
+                else
+                {
+                    hex = (pix.r << 24) + (pix.g << 16) + (pix.b << 8) + pix.a;
+                    display->set(SDL_row, SDL_col, RawPixel(hex));
+                }
             }
         }
     }
@@ -98,7 +144,6 @@ World::World(size_t _width, size_t _height, unsigned int _SDL_origin_row, unsign
     height = _height;
     SDL_origin_row = _SDL_origin_row;
     SDL_origin_col = _SDL_origin_col;
-    viewport = true;
     viewport_row = _viewport_row;
     viewport_col = _viewport_col;
 
