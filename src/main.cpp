@@ -88,10 +88,10 @@ int main()
 	//Polygon polygon2(0xa76321, 0, 1, 0, 0);
 	Polygon polygon3(0x83cb69, 0, 1, 0, 0);
 
-	polygon1.add(290,190);
-	polygon1.add(310,190);
-	polygon1.add(310,210);
-	polygon1.add(290,210);
+	polygon1.add(250,150);
+	polygon1.add(350,150);
+	polygon1.add(350,250);
+	polygon1.add(250,250);
 
 	polygon1.setCenter();
 	/*
@@ -100,31 +100,34 @@ int main()
 	polygon2.add(400,300);
 	polygon2.add(200,300);
 	*/
-	polygon3.add(290,190);
-	polygon3.add(310,190);
-	polygon3.add(310,210);
-	polygon3.add(290,210);
-
+	polygon3.add(250,150);
+	polygon3.add(350,150);
+	polygon3.add(350,250);
+	polygon3.add(250,250);
+	/*
 	Translate translate;
 
 	translate.set(-10.0, 0.0, 15);
 	translate.set(0.0, 10.0, 15);
 	translate.set(10.0, 0.0, 15);
 	translate.set(0.0, -10.0, 15);
-	/*
+	
 	Scale scale;
 
 	scale.set(1.0, 15);
 	scale.set(2.0, 5);
 	scale.set(0.5, 5);
 	*/
-	//Rotate rotate(205, 105, 10);
+	Rotate rotate;
+
+	rotate.set(0, 15.0, -1);
 
 	world.addPolygon(&polygon1);
 	world.addPolygon(&polygon3);
 	//world.addPolygon(&polygon2);
-	world.addTransformation(&translate);
+	//world.addTransformation(&translate);
 	//world.addTransformation(&scale);
+	world.addTransformation(&rotate);
 
 	world.render(30);
 	/*

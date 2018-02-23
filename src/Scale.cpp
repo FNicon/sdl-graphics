@@ -101,6 +101,6 @@ void Scale::transform(Polygon& _polygon, unsigned int _fps_count)
             }
         }
 
-        _polygon.setCenter();
+        if(mode[rule_idx] == SCALE_FIXED || mode[rule_idx] == SCALE_VERTEX) _polygon.setCenter();
     }
 }
