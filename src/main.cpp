@@ -100,36 +100,47 @@ int main()
 	polygon2.add(400,300);
 	polygon2.add(200,300);
 	*/
+	/*
 	polygon3.add(250,150);
 	polygon3.add(350,150);
 	polygon3.add(350,250);
 	polygon3.add(250,250);
-	/*
-	Translate translate;
+	*/
+	vector<ITransform*> v;
 
-	translate.set(-10.0, 0.0, 15);
-	translate.set(0.0, 10.0, 15);
-	translate.set(10.0, 0.0, 15);
-	translate.set(0.0, -10.0, 15);
+	//Translate translate1;
+	Rotate rotate1;
+	Rotate rotate2;
 	
+	//translate1.set(-6.0, 0.0, 20);
+	//translate1.set(0.0, 6.0, 20);
+
+	rotate1.set(10.0, 60);
+	rotate2.set(0, 10.0, 60);
+
+	//v.push_back(&translate1);
+	v.push_back(&rotate1);
+	v.push_back(&rotate2);
+	/*
 	Scale scale;
 
 	scale.set(1.0, 15);
 	scale.set(2.0, 5);
 	scale.set(0.5, 5);
 	*/
+	/*
 	Rotate rotate;
 
 	rotate.set(0, 15.0, -1);
-
-	world.addPolygon(&polygon1);
-	world.addPolygon(&polygon3);
+	*/
+	world.addPolygon(&polygon1, &v);
+	//world.addPolygon(&polygon3);
 	//world.addPolygon(&polygon2);
 	//world.addTransformation(&translate);
 	//world.addTransformation(&scale);
-	world.addTransformation(&rotate);
+	//world.addTransformation(&rotate);
 
-	world.render(30);
+	world.render(10);
 	/*
 	cout << endl << "Press any key to continue." << endl;
 	

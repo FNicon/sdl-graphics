@@ -6,6 +6,10 @@
 #include "Polygon.h"
 #include "ITransform.h"
 
+#include <utility>
+
+using namespace std;
+
 class World
 {
     private:
@@ -38,17 +42,11 @@ class World
 
         // Counters
         size_t num_polygon; // Number of polygons
-        size_t num_transform; // Number of transformations
 
         unsigned int fps_count;
 
-        // List of pointer to Polygon
-        vector<Polygon*> polygons;
-
-        // List of transformations
-        vector<ITransform*> transformation;
-
-        // Support Group and multiple transformations
+        // List of pair (pointer to Polygon, pointer to its transformations)
+        vector< pair< Polygon*, vector<ITransform*>* > > polygons;
 
         // Constructors
         World(size_t _width, size_t _height, unsigned int _SDL_origin_row, unsigned int _SDL_origin_col);
@@ -60,11 +58,8 @@ class World
         // Setter, coordinate relative to SDL display origin point
         void set(size_t _row, size_t _col, Pixel _pixel);
 
-        // Add a polygon to World
-        void addPolygon(Polygon* _polygon);
-
-        // Add polygon transformation
-        void addTransformation(ITransform* _transform);
+        // Add a polygon and transformations to World
+        void addPolygon(Polygon* _polygon, vector<ITransform*>* _transform = nullptr);
 
         // Render (sort by layer, transform, clipping, floodfill, write to buffer, copy to SDL's buffer, invoke SDL's render)
         void render(unsigned int fps = 0);

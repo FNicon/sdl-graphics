@@ -11,13 +11,24 @@ using namespace std;
 // Draw polygon to buffer
 void World::draw()
 {
-    for(size_t idx = 0; idx < num_polygon; idx++) polygons[idx]->draw(buffer, SDL_origin_row, SDL_origin_col);
+    for(size_t idx = 0; idx < num_polygon; idx++) polygons[idx].first->draw(buffer, SDL_origin_row, SDL_origin_col);
 }
 
 // Transform all Polygons in World
 void World::transform()
 {
-    for(size_t idx = 0; idx < num_transform; idx++) transformation[idx]->transform(*polygons[idx], fps_count);
+    for(size_t idx = 0; idx < num_polygon; idx++)
+    {
+        if(polygons[idx].second != nullptr)
+        {
+            size_t transformations = polygons[idx].second->size();
+
+            for(size_t t = 0; t < transformations; t++)
+            {
+                (*(polygons[idx].second))[t]->transform(*(polygons[idx].first), fps_count);
+            }
+        }
+    }
 }
 
 // Flush World's buffer to SDL's buffer
@@ -71,7 +82,6 @@ World::World(size_t _width, size_t _height, unsigned int _SDL_origin_row, unsign
     SDL_origin_col = _SDL_origin_col;
 
     num_polygon = 0;
-    num_transform = 0;
     fps_count = 0;
 }
 
@@ -86,7 +96,6 @@ World::World(size_t _width, size_t _height, unsigned int _SDL_origin_row, unsign
     viewport_col = _viewport_col;
 
     num_polygon = 0;
-    num_transform = 0;
     fps_count = 0;
 }
 
@@ -109,17 +118,10 @@ void World::set(size_t _row, size_t _col, Pixel _pixel)
 }
 
 // Add a polygon to World
-void World::addPolygon(Polygon* _polygon)
+void World::addPolygon(Polygon* _polygon, vector<ITransform*>* _transform)
 {
-    polygons.push_back(_polygon);
+    polygons.push_back(make_pair(_polygon, _transform));
     num_polygon++;
-}
-
-// Add polygon transformation
-void World::addTransformation(ITransform* _transform)
-{
-    transformation.push_back(_transform);
-    num_transform++;
 }
 
 // Render
