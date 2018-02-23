@@ -26,8 +26,8 @@ class Line
         Line(int _x1, int _y1, int _x2, int _y2, unsigned int _color, unsigned int _alpha, unsigned int _thickness = 1, int _layer = 0);
 
         // Draw line
-        void draw(Buffer<Pixel>& _buffer, int _row_offset, int _col_offset);
+        void draw(Buffer<Pixel>& _buffer, unsigned int _row_offset, unsigned int _col_offset);
 
-        void drawX(Buffer<Pixel>& _buffer, int _row_offset, int _col_offset); // Draw by coloring pixels for every X
-        void drawY(Buffer<Pixel>& _buffer, int _row_offset, int _col_offset); // Draw by coloring pixels for every Y
+        void drawX(Buffer<Pixel>& _buffer, unsigned int _row_offset, unsigned int _col_offset); // Draw by coloring pixels for every X
+        void drawY(Buffer<Pixel>& _buffer, unsigned int _row_offset, unsigned int _col_offset); // Draw by coloring pixels for every Y
 };

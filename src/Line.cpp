@@ -16,14 +16,14 @@ Line::Line(int _x1, int _y1, int _x2, int _y2, unsigned int _color, unsigned int
 }
 
 // Draw line
-void Line::draw(Buffer<Pixel>& _buffer, int _row_offset, int _col_offset)
+void Line::draw(Buffer<Pixel>& _buffer, unsigned int _row_offset, unsigned int _col_offset)
 {
     if(abs(y2 - y1) < abs(x2 - x1)) drawX(_buffer, _row_offset, _col_offset); // If number of pixels on X axis >= Y axis.
     else drawY(_buffer, _row_offset, _col_offset); // If number of pixels on X axis < Y axis.
 }
 
 // Draw by coloring pixels for every X
-void Line::drawX(Buffer<Pixel>& _buffer, int _row_offset, int _col_offset)
+void Line::drawX(Buffer<Pixel>& _buffer, unsigned int _row_offset, unsigned int _col_offset)
 {
     int dx = abs(x1 - x2);
     int dy = abs(y1 - y2);
@@ -84,7 +84,7 @@ void Line::drawX(Buffer<Pixel>& _buffer, int _row_offset, int _col_offset)
 }
 
 // Draw by coloring pixels for every Y 
-void Line::drawY(Buffer<Pixel>& _buffer, int _row_offset, int _col_offset)
+void Line::drawY(Buffer<Pixel>& _buffer, unsigned int _row_offset, unsigned int _col_offset)
 {
     int dx = abs(x1 - x2);
     int dy = abs(y1 - y2);
