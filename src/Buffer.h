@@ -28,8 +28,15 @@ class Buffer
         ~Buffer() { delete[] data; }
 
         // Getter
-        Type get(size_t _row, size_t _col) { return data[width * _row + _col]; }
+        Type get(size_t _row, size_t _col)
+        { 
+            if(_row >= 0 && _row < height && _col >= 0 && _col < width) return data[width * _row + _col];
+            else return data[0];
+        }
 
         // Setter
-        void set(size_t _row, size_t _col, Type _type) { data[width * _row + _col] = _type; }
+        void set(size_t _row, size_t _col, Type _type)
+        {
+            if(_row >= 0 && _row < height && _col >= 0 && _col < width) data[width * _row + _col] = _type;
+        }
 };

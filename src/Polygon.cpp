@@ -20,7 +20,7 @@ Polygon::Polygon(unsigned int _border_color, unsigned int _border_alpha, unsigne
 }
 
 // Add points to Polygon
-void Polygon::add(int _x, int _y)
+void Polygon::add(double _x, double _y)
 {
     x.push_back(_x);
     y.push_back(_y);

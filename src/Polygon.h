@@ -9,8 +9,8 @@ class Polygon
 {
     public:
         // Points of polygon
-        vector<int> x; // x coordinates
-        vector<int> y; // y coordinates
+        vector<double> x; // x coordinates
+        vector<double> y; // y coordinates
 
         // Number of points
         size_t num_points;
@@ -33,7 +33,7 @@ class Polygon
         Polygon(unsigned int _border_color, unsigned int _border_alpha, unsigned int _border_thickness, unsigned int _fill_color, unsigned int _fill_alpha, int _layer = 0);
 
         // Add points to Polygon
-        void add(int _x, int _y);
+        void add(double _x, double _y);
 
         // Draw
         void draw(Buffer<Pixel>& _buffer, unsigned int _row_offset, unsigned int _col_offset);

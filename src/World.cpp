@@ -1,10 +1,24 @@
 #include "World.h"
-
 #include "RawPixel.h"
+
+#include <chrono>
+#include <thread>
 
 using namespace std;
 
 /* Private access */
+
+// Draw polygon to buffer
+void World::draw()
+{
+    for(size_t idx = 0; idx < num_polygon; idx++) polygons[idx]->draw(buffer, SDL_origin_row, SDL_origin_col);
+}
+
+// Transform all Polygons in World
+void World::transform()
+{
+    for(size_t idx = 0; idx < num_transform; idx++) transformation[idx]->transform(*polygons[idx]);
+}
 
 // Flush World's buffer to SDL's buffer
 void World::flush()
@@ -56,7 +70,8 @@ World::World(size_t _width, size_t _height, unsigned int _SDL_origin_row, unsign
     SDL_origin_row = _SDL_origin_row;
     SDL_origin_col = _SDL_origin_col;
 
-    reset();
+    num_polygon = 0;
+    num_transform = 0;
 }
 
 World::World(size_t _width, size_t _height, unsigned int _SDL_origin_row, unsigned int _SDL_origin_col, unsigned int _viewport_row, unsigned int _viewport_col) : buffer(_width, _height)
@@ -69,7 +84,8 @@ World::World(size_t _width, size_t _height, unsigned int _SDL_origin_row, unsign
     viewport_row = _viewport_row;
     viewport_col = _viewport_col;
 
-    reset();
+    num_polygon = 0;
+    num_transform = 0;
 }
 
 // Getter, coordinate relative to SDL display origin point
@@ -90,9 +106,41 @@ void World::set(size_t _row, size_t _col, Pixel _pixel)
     buffer.set(world_row, world_col, _pixel);
 }
 
-// Render
-void World::render()
+// Add a polygon to World
+void World::addPolygon(Polygon* _polygon)
 {
-    flush();
-    display->render();
+    polygons.push_back(_polygon);
+    num_polygon++;
+}
+
+// Add polygon transformation
+void World::addTransformation(ITransform* _transform)
+{
+    transformation.push_back(_transform);
+    num_transform++;
+}
+
+// Render
+void World::render(unsigned int fps)
+{
+    if(fps != 0)
+    {
+        while(true)
+        {
+            reset();
+            transform();
+            draw();
+            flush();
+            display->render();
+
+            this_thread::sleep_for(chrono::milliseconds(1000 / fps));
+        }
+    }
+    else
+    {
+        reset();
+        draw();
+        flush();
+        display->render();
+    }
 }

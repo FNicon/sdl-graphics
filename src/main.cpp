@@ -3,6 +3,9 @@
 #include "World.h"
 #include "SDLDisplay.h"
 #include "Polygon.h"
+#include "Translate.h"
+#include "Scale.h"
+#include "Rotate.h"
 
 using namespace std;
 
@@ -66,7 +69,7 @@ int main()
 	polygon2.add(-1,99);
 
 	polygon2.draw(world.buffer, world.SDL_origin_row, world.SDL_origin_col);
-	*/
+	
 	Polygon polygon3(0x9c6fba, 0, 1, 0, 0);
 
 	polygon3.add(50,50);
@@ -77,13 +80,40 @@ int main()
 	polygon3.add(20,80);
 
 	polygon3.draw(world.buffer, world.SDL_origin_row, world.SDL_origin_col);
+	*/
 
-	world.render();
+	cout << endl << "Press CTRL + C to quit." << endl;
 
-	cout << endl << "Press any key to continue..." << endl;
+	Polygon polygon1(0x9c6fba, 0, 1, 0, 0);
+	//Polygon polygon2(0xa76321, 0, 1, 0, 0);
+
+	polygon1.add(200,100);
+	polygon1.add(400,100);
+	polygon1.add(400,300);
+	polygon1.add(200,300);
+	/*
+	polygon2.add(200,100);
+	polygon2.add(400,100);
+	polygon2.add(400,300);
+	polygon2.add(200,300);
+	*/
+	//Translate translate(1, 1);
+	//Scale scale(295, 195, 1.2);
+	Rotate rotate(300, 200, 5);
+
+	world.addPolygon(&polygon1);
+	//world.addPolygon(&polygon2);
+	//world.addTransformation(&translate);
+	//world.addTransformation(&scale);
+	world.addTransformation(&rotate);
+
+	world.render(60);
+	/*
+	cout << endl << "Press any key to continue." << endl;
 	
 	string dummy;
 	getline(cin, dummy);
+	*/
 
 	return 0;
 }
