@@ -3,20 +3,57 @@
 using namespace std;
 
 // Constructor
-Translate::Translate(double _x_offset, double _y_offset)
+Translate::Translate()
 {
-    x_offset = _x_offset;
-    y_offset = _y_offset;
+    num_rules = 0;
+}
+
+void Translate::set(double _x_offset, double _y_offset, int _frame)
+{
+    x_offset.push_back(_x_offset);
+    y_offset.push_back(_y_offset);
+    frame.push_back(_frame);
+
+    num_rules++;
 }
 
 // Translate polygon by offset every frame
 void Translate::transform(Polygon& _polygon, unsigned int _fps_count)
 {
-    size_t num_points = _polygon.num_points;
+    // Ignore expired rules
+    unsigned int total_fps = 0;
+    int rule_idx = -1;
 
-    for(size_t idx = 0; idx < num_points; idx++)
+    for(size_t idx = 0; idx < num_rules; idx++)
     {
-        _polygon.x[idx] += x_offset;
-        _polygon.y[idx] += y_offset;
+        if(frame[idx] == -1)
+        {
+            rule_idx = idx;
+            break;
+        }
+        else
+        {
+            total_fps += frame[idx];
+
+            if(total_fps > _fps_count)
+            {
+                rule_idx = idx;
+                break;
+            }
+        }
+    }
+
+    // Apply valid rule if any
+    if(rule_idx != -1)
+    {
+        size_t num_points = _polygon.num_points;
+
+        for(size_t idx = 0; idx < num_points; idx++)
+        {
+            _polygon.x[idx] += x_offset[rule_idx];
+            _polygon.y[idx] += y_offset[rule_idx];
+        }
+
+        _polygon.setCenter();
     }
 }

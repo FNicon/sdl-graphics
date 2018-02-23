@@ -86,6 +86,7 @@ int main()
 
 	Polygon polygon1(0x9c6fba, 0, 1, 0, 0);
 	//Polygon polygon2(0xa76321, 0, 1, 0, 0);
+	Polygon polygon3(0x83cb69, 0, 1, 0, 0);
 
 	polygon1.add(290,190);
 	polygon1.add(310,190);
@@ -99,18 +100,33 @@ int main()
 	polygon2.add(400,300);
 	polygon2.add(200,300);
 	*/
-	//Translate translate(1, 1);
+	polygon3.add(290,190);
+	polygon3.add(310,190);
+	polygon3.add(310,210);
+	polygon3.add(290,210);
+
+	Translate translate;
+
+	translate.set(-10.0, 0.0, 15);
+	translate.set(0.0, 10.0, 15);
+	translate.set(10.0, 0.0, 15);
+	translate.set(0.0, -10.0, 15);
+	/*
 	Scale scale;
 
-	scale.set(1.18, 15);
+	scale.set(1.0, 15);
+	scale.set(2.0, 5);
+	scale.set(0.5, 5);
+	*/
 	//Rotate rotate(205, 105, 10);
 
 	world.addPolygon(&polygon1);
+	world.addPolygon(&polygon3);
 	//world.addPolygon(&polygon2);
-	//world.addTransformation(&translate);
-	world.addTransformation(&scale);
+	world.addTransformation(&translate);
+	//world.addTransformation(&scale);
 
-	world.render(5);
+	world.render(30);
 	/*
 	cout << endl << "Press any key to continue." << endl;
 	
