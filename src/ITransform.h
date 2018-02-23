@@ -6,5 +6,5 @@ class ITransform
 {
     public:
         // Transform method
-        virtual void transform(Polygon& _polygon) = 0;
+        virtual void transform(Polygon& _polygon, unsigned int _fps_count) = 0;
 };

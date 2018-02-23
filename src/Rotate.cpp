@@ -11,7 +11,7 @@ Rotate::Rotate(int _origin_x, int _origin_y, double _angle)
 }
 
 // Rotate polygon by counterclockwise angle relative to pivot every frame
-void Rotate::transform(Polygon& _polygon)
+void Rotate::transform(Polygon& _polygon, unsigned int _fps_count)
 {
     size_t num_points = _polygon.num_points;
     int relative_x, relative_y;

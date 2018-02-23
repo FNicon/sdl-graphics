@@ -17,7 +17,7 @@ void World::draw()
 // Transform all Polygons in World
 void World::transform()
 {
-    for(size_t idx = 0; idx < num_transform; idx++) transformation[idx]->transform(*polygons[idx]);
+    for(size_t idx = 0; idx < num_transform; idx++) transformation[idx]->transform(*polygons[idx], fps_count);
 }
 
 // Flush World's buffer to SDL's buffer
@@ -72,6 +72,7 @@ World::World(size_t _width, size_t _height, unsigned int _SDL_origin_row, unsign
 
     num_polygon = 0;
     num_transform = 0;
+    fps_count = 0;
 }
 
 World::World(size_t _width, size_t _height, unsigned int _SDL_origin_row, unsigned int _SDL_origin_col, unsigned int _viewport_row, unsigned int _viewport_col) : buffer(_width, _height)
@@ -86,6 +87,7 @@ World::World(size_t _width, size_t _height, unsigned int _SDL_origin_row, unsign
 
     num_polygon = 0;
     num_transform = 0;
+    fps_count = 0;
 }
 
 // Getter, coordinate relative to SDL display origin point
@@ -133,12 +135,14 @@ void World::render(unsigned int fps)
             flush();
             display->render();
 
+            fps_count++;
             this_thread::sleep_for(chrono::milliseconds(1000 / fps));
         }
     }
     else
     {
         reset();
+        transform();
         draw();
         flush();
         display->render();

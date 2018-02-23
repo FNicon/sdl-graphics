@@ -16,5 +16,7 @@ class Rotate : public ITransform
         Rotate(int _origin_x, int _origin_y, double _angle);
 
         // Rotate polygon by counterclockwise angle relative to pivot every frame
-        void transform(Polygon& _polygon);
+        void transform(Polygon& _polygon, unsigned int _fps_count);
+
+        // Support for center point rotation
 };

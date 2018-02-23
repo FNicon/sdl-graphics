@@ -40,11 +40,15 @@ class World
         size_t num_polygon; // Number of polygons
         size_t num_transform; // Number of transformations
 
+        unsigned int fps_count;
+
         // List of pointer to Polygon
         vector<Polygon*> polygons;
 
         // List of transformations
         vector<ITransform*> transformation;
+
+        // Support Group and multiple transformations
 
         // Constructors
         World(size_t _width, size_t _height, unsigned int _SDL_origin_row, unsigned int _SDL_origin_col);
