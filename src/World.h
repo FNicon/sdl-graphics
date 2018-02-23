@@ -13,6 +13,9 @@ using namespace std;
 class World
 {
     private:
+        // Comparison function for sorting
+        static bool compare(const pair< Polygon*, vector<ITransform*>* >& p1, const pair< Polygon*, vector<ITransform*>* >& p2);
+
         void draw(); // Draw polygon to buffer
         void transform(); // Transform all Polygons in World
         void flush(); // Flush World's buffer to SDL's buffer

@@ -3,10 +3,17 @@
 
 #include <chrono>
 #include <thread>
+#include <algorithm>
 
 using namespace std;
 
 /* Private access */
+
+// Comparison function for sorting
+bool World::compare(const pair< Polygon*, vector<ITransform*>* >& p1, const pair< Polygon*, vector<ITransform*>* >& p2)
+{
+    return p1.first->layer < p2.first->layer;
+}
 
 // Draw polygon to buffer
 void World::draw()
@@ -127,6 +134,8 @@ void World::addPolygon(Polygon* _polygon, vector<ITransform*>* _transform)
 // Render
 void World::render(unsigned int fps)
 {
+    sort(polygons.begin(), polygons.end(), compare);
+
     if(fps != 0)
     {
         while(true)

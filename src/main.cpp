@@ -84,9 +84,9 @@ int main()
 
 	cout << endl << "Press CTRL + C to quit." << endl;
 
-	Polygon polygon1(0x9c6fba, 0, 1, 0, 0);
+	Polygon polygon1(0x9c6fba, 0, 2, 0, 0, 3);
 	//Polygon polygon2(0xa76321, 0, 1, 0, 0);
-	Polygon polygon3(0x83cb69, 0, 1, 0, 0);
+	Polygon polygon3(0x83cb69, 0, 2, 0, 0, 4);
 
 	polygon1.add(250,150);
 	polygon1.add(350,150);
@@ -100,27 +100,27 @@ int main()
 	polygon2.add(400,300);
 	polygon2.add(200,300);
 	*/
-	/*
+	
 	polygon3.add(250,150);
 	polygon3.add(350,150);
 	polygon3.add(350,250);
 	polygon3.add(250,250);
-	*/
+	
 	vector<ITransform*> v;
 
 	//Translate translate1;
 	Rotate rotate1;
-	Rotate rotate2;
+	//Rotate rotate2;
 	
 	//translate1.set(-6.0, 0.0, 20);
 	//translate1.set(0.0, 6.0, 20);
 
-	rotate1.set(10.0, 60);
-	rotate2.set(0, 10.0, 60);
+	rotate1.set(5.0, 60);
+	//rotate2.set(0, 10.0, 60);
 
 	//v.push_back(&translate1);
 	v.push_back(&rotate1);
-	v.push_back(&rotate2);
+	//v.push_back(&rotate2);
 	/*
 	Scale scale;
 
@@ -134,7 +134,7 @@ int main()
 	rotate.set(0, 15.0, -1);
 	*/
 	world.addPolygon(&polygon1, &v);
-	//world.addPolygon(&polygon3);
+	world.addPolygon(&polygon3);
 	//world.addPolygon(&polygon2);
 	//world.addTransformation(&translate);
 	//world.addTransformation(&scale);
