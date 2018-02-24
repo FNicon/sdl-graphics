@@ -18,8 +18,10 @@ int main()
 	world.display = &display; // set World's display to SDL
 
 	Viewport viewport(250, 250, 0xffff00, 0, 1, 0x00ff00); // create Viewport
-	viewport.add(1,1); // viewport upperleftmost location in SDL
 	world.viewport = &viewport; // set World's viewport to Viewport
+
+	viewport.add(1,1); // viewport upperleftmost location in SDL
+	viewport.setCenter();
 
 	//cout << endl << "Press CTRL + C to quit." << endl;
 
@@ -53,6 +55,7 @@ int main()
 	
 	// Create Transformation object
 	Translate translate;
+	Scale scale;
 	Rotate rotate1, rotate2;
 
 	// Add Transformation rules

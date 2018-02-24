@@ -93,5 +93,7 @@ void Translate::transform(Viewport& _viewport, unsigned int _fps_count)
             _viewport.x[idx] += x_offset[rule_idx];
             _viewport.y[idx] += y_offset[rule_idx];
         }
+
+        _viewport.setCenter();
     }
 }

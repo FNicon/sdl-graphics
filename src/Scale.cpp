@@ -154,6 +154,16 @@ void Scale::transform(Viewport& _viewport, unsigned int _fps_count)
                 _viewport.x[idx] = relative_x * multiplier[rule_idx] + _viewport.x[origin_vertex[rule_idx]];
                 _viewport.y[idx] = relative_y * multiplier[rule_idx] + _viewport.y[origin_vertex[rule_idx]];
             }
+            else
+            {
+                relative_x = _viewport.x[idx] - _viewport.center_x;
+                relative_y = _viewport.y[idx] - _viewport.center_y;
+
+                _viewport.x[idx] = relative_x * multiplier[rule_idx] + _viewport.center_x;
+                _viewport.y[idx] = relative_y * multiplier[rule_idx] + _viewport.center_y;
+            }
         }
+
+        if(mode[rule_idx] == SCALE_FIXED || mode[rule_idx] == SCALE_VERTEX) _viewport.setCenter();
     }
 }

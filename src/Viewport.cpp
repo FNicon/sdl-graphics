@@ -1,6 +1,8 @@
 #include "Viewport.h"
 #include "Line.h"
 
+#include <cmath>
+
 using namespace std;
 
 // Constructor
@@ -21,6 +23,25 @@ void Viewport::add(unsigned int x_min, unsigned int y_min)
     x.push_back(x_min + width); y.push_back(y_min - border_thickness);
     x.push_back(x_min + width); y.push_back(y_min + height);
     x.push_back(x_min - border_thickness); y.push_back(y_min + height);
+}
+
+// Set center point
+void Viewport::setCenter()
+{
+    double x_min, x_max, y_min, y_max;
+    x_min = x_max = x[0];
+    y_min = y_max = y[0];
+
+    for(size_t idx = 1; idx < num_points; idx++)
+    {
+        if(x[idx] < x_min) x_min = x[idx];
+        if(x[idx] > x_max) x_max = x[idx];
+        if(y[idx] < y_min) y_min = y[idx];
+        if(y[idx] > y_max) y_max = y[idx];
+    }
+
+    center_x = round((x_min + x_max) / 2);
+    center_y = round((y_min + y_max) / 2);
 }
 
 // Draw viewport
