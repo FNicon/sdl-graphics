@@ -50,7 +50,7 @@ void Scale::transform(Polygon& _polygon, unsigned int _fps_count)
 
     for(size_t idx = 0; idx < num_rules; idx++)
     {
-        if(frame[idx] == -1)
+        if(frame[idx] == 0)
         {
             rule_idx = idx;
             break;

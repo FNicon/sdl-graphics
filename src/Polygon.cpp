@@ -2,6 +2,8 @@
 #include "Line.h"
 
 #include <cmath>
+#include <queue>
+#include <utility>
 
 using namespace std;
 
@@ -64,5 +66,39 @@ void Polygon::draw(Buffer<Pixel>& _buffer, unsigned int _row_offset, unsigned in
 
         Line line(x1, y1, x2, y2, border_color, border_alpha, border_thickness, layer);
         line.draw(_buffer, _row_offset, _col_offset);
+    }
+}
+
+// Fill
+void Polygon::fill(Buffer<Pixel>& _buffer, unsigned int _row_offset, unsigned int _col_offset)
+{
+    Pixel polygon_pix(fill_color, fill_alpha, layer);
+    queue< pair< int,int > > q;
+
+    int delta_row[4] = {0, 1, 0, -1};
+    int delta_col[4] = {1, 0, -1, 0};
+
+    q.push(make_pair(center_y, center_x));
+    _buffer.set(center_y + _row_offset, center_x + _col_offset, polygon_pix);
+
+    while(!q.empty())
+    {
+        int row = q.front().first;
+        int col = q.front().second;
+        q.pop();
+
+        for(int k=0;k<4;k++)
+        {
+            int next_row = row + delta_row[k];
+            int next_col = col + delta_col[k];
+
+            Pixel buffer_pix = _buffer.get(next_row + _row_offset, next_col + _col_offset);
+            
+            if(buffer_pix.layer != layer)
+            {
+                _buffer.set(next_row + _row_offset, next_col + _col_offset, polygon_pix);
+                q.push(make_pair(next_row, next_col));
+            }
+        }
     }
 }

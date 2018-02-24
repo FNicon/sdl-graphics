@@ -27,7 +27,7 @@ class Rotate : public ITransform
         // Angle (degrees)
         vector<double> angle;
 
-        // Rotate duration in number of frames, -1 = forever
+        // Rotate duration in number of frames, 0 = forever
         vector<int> frame;
 
         // Number of rules

@@ -11,7 +11,7 @@ class Translate : public ITransform
         vector<double> x_offset;
         vector<double> y_offset;
 
-        // Translate duration in number of frames, -1 = forever
+        // Translate duration in number of frames, 0 = forever
         vector<int> frame;
 
         // Number of rules

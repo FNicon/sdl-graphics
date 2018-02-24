@@ -44,4 +44,7 @@ class Polygon
 
         // Draw
         void draw(Buffer<Pixel>& _buffer, unsigned int _row_offset, unsigned int _col_offset);
+
+        // Fill
+        void fill(Buffer<Pixel>& _buffer, unsigned int _row_offset, unsigned int _col_offset);
 };

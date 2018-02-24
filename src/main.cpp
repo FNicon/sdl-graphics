@@ -12,56 +12,65 @@ using namespace std;
 
 int main()
 {
-	World world(800, 600, 100, 100, 150, 150); // create World
-	SDLDisplay sdl(600, 400); // create SDL
-	Viewport viewport(300, 200, 0xff0000, 0, 3); // create Viewport
+	World world(800, 600, 100, 100, 100, 100); // create World
+	
+	SDLDisplay display(600, 400); // create SDL
+	world.display = &display; // set World's display to SDL
 
-	world.display = &sdl; // set World's display to SDL
-	world.viewport = &viewport; // set World's viewport to Viewport
+	//Viewport viewport(450, 250, 0xff0000, 0, 1); // create Viewport
+	//world.viewport = &viewport; // set World's viewport to Viewport
 
 	cout << endl << "Press CTRL + C to quit." << endl;
 
-	Polygon polygon1(0x9c6fba, 0, 2, 0, 0, 3);
-	Polygon polygon2(0x83cb69, 0, 2, 0, 0, 4);
+	// Create Polygon
+	Polygon polygon1(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
+	Polygon polygon2(0x83cb69, 0, 1, 0x83cb69, 0, 4);
 
-	vector<ITransform*> v1;
+	// Create vector of Transformations for each Polygon
+	vector<ITransform*> v1; 
 	vector<ITransform*> v2;
 
-	polygon1.add(250,150);
-	polygon1.add(350,150);
-	polygon1.add(350,250);
-	polygon1.add(250,250);
-	polygon1.setCenter();
+	// Add Points to Polygon
+	polygon1.add(160,160);
+	polygon1.add(220,160);
+	polygon1.add(250,212);
+	polygon1.add(220,263);
+	polygon1.add(160,263);
+	polygon1.add(130,212);
+	polygon1.setCenter(); // set Polygon's center point (for floodfill, self-scaling and self-rotate)
 	
-	polygon2.add(250,150);
-	polygon2.add(350,150);
-	polygon2.add(350,250);
-	polygon2.add(250,250);
+	polygon2.add(190,190);
+	polygon2.add(250,190);
+	polygon2.add(280,242);
+	polygon2.add(250,297);
+	polygon2.add(190,297);
+	polygon2.add(160,242);
 	polygon2.setCenter();
 	
-	Translate translate1;
-	Scale scale1;
+	// Create Transformation object
 	Rotate rotate1, rotate2;
 
-	translate1.set(-6.0, 0.0, 20);
-	translate1.set(0.0, 6.0, 20);
-	translate1.set(6.0, 0.0, 20);
-	translate1.set(0.0, -6.0, 20);
-	rotate2.set(8.0, 80);
-	
-	rotate1.set(5.0, 60);
-	scale1.set(1.1, 30);
-	scale1.set(0.9, 30);
+	// Add Transformation rules
+	rotate1.set(10.0, 0);
+	rotate2.set(12.0, 0);
 
-	v2.push_back(&translate1);
+	// Add Transformation object to vector
 	v1.push_back(&rotate1);
-	v1.push_back(&scale1);
 	v2.push_back(&rotate2);
 
+	// Add Polygon and its vector of Transformation to World
 	world.addPolygon(&polygon1, &v1);
 	world.addPolygon(&polygon2, &v2);
 
-	world.render(10);
+	// Render World at 60 fps
+	world.render(60);
+
+	/*
+	cout << "Press any key to continue.." << endl;
+
+	string s;
+	getline(cin,s);
+	*/
 
 	return 0;
 }

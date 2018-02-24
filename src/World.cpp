@@ -18,7 +18,11 @@ bool World::compare(const pair< Polygon*, vector<ITransform*>* >& p1, const pair
 // Draw polygon to buffer
 void World::draw()
 {
-    for(size_t idx = 0; idx < num_polygon; idx++) polygons[idx].first->draw(buffer, SDL_origin_row, SDL_origin_col);
+    for(size_t idx = 0; idx < num_polygon; idx++) 
+    {
+        polygons[idx].first->draw(buffer, SDL_origin_row, SDL_origin_col);
+        polygons[idx].first->fill(buffer, SDL_origin_row, SDL_origin_col);
+    }
 }
 
 // Transform all Polygons in World
@@ -51,14 +55,13 @@ void World::flush()
     unsigned int world_viewport_row, world_viewport_col;
 
     unsigned int viewport_x_max, viewport_x_min, viewport_y_max, viewport_y_min;
-    size_t viewport_width, viewport_height;
     unsigned int viewport_thickness;
 
     if(viewport != nullptr)
     {
         size_t viewport_width = viewport->width;
         size_t viewport_height = viewport->height;
-        unsigned int viewport_thickness = viewport->border_thickness;
+        viewport_thickness = viewport->border_thickness;
 
         world_viewport_row = SDL_origin_row + viewport_row;
         world_viewport_col = SDL_origin_col + viewport_col;
@@ -87,7 +90,7 @@ void World::flush()
                     display->set(SDL_row, SDL_col, RawPixel(hex));
                 }
                 // Outside viewport
-                else if(world_row < viewport_y_min || world_row > (viewport_y_max + viewport_thickness) || world_col < viewport_x_min || world_col > (viewport_x_max + viewport_thickness))
+                else if(world_row < viewport_y_min || world_row >= (viewport_y_max + viewport_thickness) || world_col < viewport_x_min || world_col >= (viewport_x_max + viewport_thickness))
                 {
                     display->set(SDL_row, SDL_col, RawPixel(0x0));
                 }

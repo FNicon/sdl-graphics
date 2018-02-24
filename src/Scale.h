@@ -26,7 +26,7 @@ class Scale : public ITransform
         // Multiplier
         vector<double> multiplier;
 
-        // Scale duration in number of frames, -1 = forever
+        // Scale duration in number of frames, 0 = forever
         vector<int> frame;
 
         // Number of rules

@@ -17,7 +17,7 @@ class World
         // Comparison function for sorting
         static bool compare(const pair< Polygon*, vector<ITransform*>* >& p1, const pair< Polygon*, vector<ITransform*>* >& p2);
 
-        void draw(); // Draw polygon to buffer
+        void draw(); // Draw and fill polygon to buffer
         void transform(); // Transform all Polygons in World
         void flush(); // Flush World's buffer to SDL's buffer
         void reset(); // Reset World's buffer
@@ -27,7 +27,7 @@ class World
         size_t width;
         size_t height;
 
-        // Buffer
+        // Buffer for Pixels
         Buffer<Pixel> buffer;
 
         // Pointer to SDL Display
