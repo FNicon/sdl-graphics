@@ -104,3 +104,56 @@ void Scale::transform(Polygon& _polygon, unsigned int _fps_count)
         if(mode[rule_idx] == SCALE_FIXED || mode[rule_idx] == SCALE_VERTEX) _polygon.setCenter();
     }
 }
+
+void Scale::transform(Viewport& _viewport, unsigned int _fps_count)
+{
+    // Ignore expired rules
+    unsigned int total_fps = 0;
+    int rule_idx = -1;
+
+    for(size_t idx = 0; idx < num_rules; idx++)
+    {
+        if(frame[idx] == 0)
+        {
+            rule_idx = idx;
+            break;
+        }
+        else
+        {
+            total_fps += frame[idx];
+            
+            if(total_fps > _fps_count)
+            {
+                rule_idx = idx;
+                break;
+            }
+        }
+    }
+
+    // Apply valid rule if any
+    if(rule_idx != -1)
+    {
+        size_t num_points = _viewport.num_points;
+        int relative_x, relative_y;
+
+        for(size_t idx = 0; idx < num_points; idx++)
+        {
+            if(mode[rule_idx] == SCALE_FIXED)
+            {
+                relative_x = _viewport.x[idx] - origin_x[rule_idx];
+                relative_y = _viewport.y[idx] - origin_y[rule_idx];
+
+                _viewport.x[idx] = relative_x * multiplier[rule_idx] + origin_x[rule_idx];
+                _viewport.y[idx] = relative_y * multiplier[rule_idx] + origin_y[rule_idx];
+            }
+            else if(mode[rule_idx] == SCALE_VERTEX)
+            {
+                relative_x = _viewport.x[idx] - _viewport.x[origin_vertex[rule_idx]];
+                relative_y = _viewport.y[idx] - _viewport.y[origin_vertex[rule_idx]];
+
+                _viewport.x[idx] = relative_x * multiplier[rule_idx] + _viewport.x[origin_vertex[rule_idx]];
+                _viewport.y[idx] = relative_y * multiplier[rule_idx] + _viewport.y[origin_vertex[rule_idx]];
+            }
+        }
+    }
+}

@@ -15,7 +15,7 @@ bool World::compare(const pair< Polygon*, vector<ITransform*>* >& p1, const pair
     return p1.first->layer < p2.first->layer;
 }
 
-// Draw polygon to buffer
+// Draw and fill polygon to buffer, draw viewport
 void World::draw()
 {
     for(size_t idx = 0; idx < num_polygon; idx++) 
@@ -23,6 +23,8 @@ void World::draw()
         polygons[idx].first->draw(buffer, SDL_origin_row, SDL_origin_col);
         polygons[idx].first->fill(buffer, SDL_origin_row, SDL_origin_col);
     }
+
+    viewport->draw(buffer, SDL_origin_row, SDL_origin_col);
 }
 
 // Transform all Polygons in World
@@ -40,6 +42,11 @@ void World::transform()
             }
         }
     }
+
+    for(size_t idx = 0; idx < num_viewport_trans; idx++)
+    {
+        (*(viewport_trans))[idx]->transform(*viewport, fps_count);
+    }
 }
 
 // Flush World's buffer to SDL's buffer
@@ -48,28 +55,17 @@ void World::flush()
     size_t SDL_width = display->width;
     size_t SDL_height = display->height;
 
-    Pixel background(0, 0, -100);
+    unsigned int world_row, world_col, hex;
     Pixel pix;
 
-    unsigned int world_row, world_col, hex;
-    unsigned int world_viewport_row, world_viewport_col;
-
     unsigned int viewport_x_max, viewport_x_min, viewport_y_max, viewport_y_min;
-    unsigned int viewport_thickness;
 
     if(viewport != nullptr)
     {
-        size_t viewport_width = viewport->width;
-        size_t viewport_height = viewport->height;
-        viewport_thickness = viewport->border_thickness;
-
-        world_viewport_row = SDL_origin_row + viewport_row;
-        world_viewport_col = SDL_origin_col + viewport_col;
-
-        viewport_x_min = world_viewport_col - viewport_thickness;
-        viewport_y_min = world_viewport_row - viewport_thickness;
-        viewport_x_max = world_viewport_col + viewport_width;
-        viewport_y_max = world_viewport_row + viewport_height;
+        viewport_x_min = SDL_origin_col + viewport->x[0];
+        viewport_y_min = SDL_origin_row + viewport->y[0];
+        viewport_x_max = SDL_origin_col + viewport->x[2];
+        viewport_y_max = SDL_origin_row + viewport->x[2];
     }
 
     for(size_t SDL_row = 0; SDL_row < SDL_height; SDL_row++)
@@ -82,34 +78,23 @@ void World::flush()
             if(viewport != nullptr)
             {
                 // Inside viewport
-                if(world_row > viewport_y_min && world_row < viewport_y_max && world_col > viewport_x_min && world_col < viewport_x_max)
+                if(world_row >= viewport_y_min && world_row <= viewport_y_max && world_col >= viewport_x_min && world_col <= viewport_x_max)
                 {
                     pix = buffer.get(world_row, world_col);
-
                     hex = (pix.r << 24) + (pix.g << 16) + (pix.b << 8) + pix.a;
                     display->set(SDL_row, SDL_col, RawPixel(hex));
                 }
-                // Outside viewport
-                else if(world_row < viewport_y_min || world_row >= (viewport_y_max + viewport_thickness) || world_col < viewport_x_min || world_col >= (viewport_x_max + viewport_thickness))
+                else
                 {
-                    display->set(SDL_row, SDL_col, RawPixel(0x0));
-                }
-                else // Viewport border
-                {
-                    hex = (viewport->border_color << 8) + viewport->border_alpha;
+                    hex = (background_color << 8);
                     display->set(SDL_row, SDL_col, RawPixel(hex));
                 }
             }
             else
             {
                 pix = buffer.get(world_row, world_col);
-
-                if(pix == background) display->set(SDL_row, SDL_col, RawPixel(0x0));
-                else
-                {
-                    hex = (pix.r << 24) + (pix.g << 16) + (pix.b << 8) + pix.a;
-                    display->set(SDL_row, SDL_col, RawPixel(hex));
-                }
+                hex = (pix.r << 24) + (pix.g << 16) + (pix.b << 8) + pix.a;
+                display->set(SDL_row, SDL_col, RawPixel(hex));
             }
         }
     }
@@ -118,11 +103,40 @@ void World::flush()
 // Reset World's buffer
 void World::reset()
 {
+    unsigned int hex;
+    unsigned int viewport_x_max, viewport_x_min, viewport_y_max, viewport_y_min;
+
+    if(viewport != nullptr)
+    {
+        viewport_x_min = SDL_origin_col + viewport->x[0];
+        viewport_y_min = SDL_origin_row + viewport->y[0];
+        viewport_x_max = SDL_origin_col + viewport->x[2];
+        viewport_y_max = SDL_origin_row + viewport->x[2];
+    }
+
     for(size_t row = 0; row < height; row++)
     {
         for(size_t col = 0; col < width; col++)
         {
-            buffer.set(row, col, Pixel(0, 0, -100));
+            if(viewport != nullptr)
+            {
+                // Inside viewport
+                if(row > viewport_y_min && row < viewport_y_max && col > viewport_x_min && col < viewport_x_max)
+                {
+                    hex = (viewport->background_color << 8);
+                    buffer.set(row, col, Pixel(hex, 0, -100));
+                }
+                // Outside viewport
+                else
+                {
+                    hex = (background_color << 8);
+                    buffer.set(row, col, Pixel(hex, 0, -100));
+                }
+            }
+            else
+            {
+                buffer.set(row, col, Pixel(background_color, 0, -100));
+            }
         }
     }
 }
@@ -130,27 +144,16 @@ void World::reset()
 /* Public access */
 
 // Constructors
-World::World(size_t _width, size_t _height, unsigned int _SDL_origin_row, unsigned int _SDL_origin_col) : buffer(_width, _height)
+World::World(size_t _width, size_t _height, unsigned int _SDL_origin_row, unsigned int _SDL_origin_col, unsigned int _background_color) : buffer(_width, _height)
 {
     width = _width;
     height = _height;
     SDL_origin_row = _SDL_origin_row;
     SDL_origin_col = _SDL_origin_col;
+    background_color = _background_color;
 
     num_polygon = 0;
-    fps_count = 0;
-}
-
-World::World(size_t _width, size_t _height, unsigned int _SDL_origin_row, unsigned int _SDL_origin_col, unsigned int _viewport_row, unsigned int _viewport_col) : buffer(_width, _height)
-{
-    width = _width;
-    height = _height;
-    SDL_origin_row = _SDL_origin_row;
-    SDL_origin_col = _SDL_origin_col;
-    viewport_row = _viewport_row;
-    viewport_col = _viewport_col;
-
-    num_polygon = 0;
+    num_viewport_trans = 0;
     fps_count = 0;
 }
 
@@ -172,11 +175,25 @@ void World::set(size_t _row, size_t _col, Pixel _pixel)
     buffer.set(world_row, world_col, _pixel);
 }
 
+// Reset fps_count, animation will start from beginning
+void World::reset_fps_count(unsigned int _elapsed_frames, int _fps_reset)
+{
+    elapsed_frames = _elapsed_frames;
+    fps_reset = _fps_reset;
+}
+
 // Add a polygon to World
 void World::addPolygon(Polygon* _polygon, vector<ITransform*>* _transform)
 {
     polygons.push_back(make_pair(_polygon, _transform));
     num_polygon++;
+}
+
+// Add viewport transformations
+void World::addViewportTrans(vector<ITransform*>* _transform)
+{
+    viewport_trans = _transform;
+    num_viewport_trans = _transform->size();
 }
 
 // Render
@@ -195,6 +212,13 @@ void World::render(unsigned int fps)
             display->render();
 
             fps_count++;
+
+            if(fps_count == elapsed_frames && fps_reset != 0)
+            {
+                if(fps_reset != -1) fps_reset--;
+                fps_count = 0;
+            }
+
             this_thread::sleep_for(chrono::milliseconds(1000 / fps));
         }
     }

@@ -109,3 +109,5 @@ void Rotate::transform(Polygon& _polygon, unsigned int _fps_count)
         if(mode[rule_idx] == ROTATE_FIXED || mode[rule_idx] == ROTATE_VERTEX) _polygon.setCenter();
     }
 }
+
+void Rotate::transform(Viewport& _viewport, unsigned int _fps_count) {}

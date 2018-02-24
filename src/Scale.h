@@ -42,4 +42,5 @@ class Scale : public ITransform
 
         // Scale polygon by multiplier relative to origin every frame
         void transform(Polygon& _polygon, unsigned int _fps_count);
+        void transform(Viewport& _viewport, unsigned int _fps_count);
 };

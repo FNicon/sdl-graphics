@@ -12,13 +12,14 @@ using namespace std;
 
 int main()
 {
-	World world(800, 600, 100, 100, 100, 100); // create World
+	World world(800, 600, 100, 100); // create World
 	
 	SDLDisplay display(600, 400); // create SDL
 	world.display = &display; // set World's display to SDL
 
-	//Viewport viewport(450, 250, 0xff0000, 0, 1); // create Viewport
-	//world.viewport = &viewport; // set World's viewport to Viewport
+	Viewport viewport(250, 250, 0xff0000, 0, 1); // create Viewport
+	viewport.add(1,1); // viewport upperleftmost location in SDL
+	world.viewport = &viewport; // set World's viewport to Viewport
 
 	cout << endl << "Press CTRL + C to quit." << endl;
 
@@ -27,7 +28,7 @@ int main()
 	Polygon polygon2(0x83cb69, 0, 1, 0x83cb69, 0, 4);
 
 	// Create vector of Transformations for each Polygon
-	vector<ITransform*> v1; 
+	vector<ITransform*> v1;
 	vector<ITransform*> v2;
 
 	// Add Points to Polygon

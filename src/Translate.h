@@ -25,4 +25,5 @@ class Translate : public ITransform
 
         // Translate polygon by offset every frame
         void transform(Polygon& _polygon, unsigned int _fps_count);
+        void transform(Viewport& _viewport, unsigned int _fps_count);
 };

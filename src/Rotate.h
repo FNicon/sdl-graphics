@@ -43,4 +43,5 @@ class Rotate : public ITransform
 
         // Rotate polygon by counterclockwise angle relative to pivot every frame
         void transform(Polygon& _polygon, unsigned int _fps_count);
+        void transform(Viewport& _viewport, unsigned int _fps_count);
 };
