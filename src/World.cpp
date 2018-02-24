@@ -56,7 +56,7 @@ void World::flush()
     size_t SDL_height = display->height;
 
     unsigned int world_row, world_col, hex;
-    Pixel pix;
+    Pixel pix, viewport_backgound(background_color, 0, -99);
 
     unsigned int viewport_x_max, viewport_x_min, viewport_y_max, viewport_y_min;
 
@@ -65,7 +65,7 @@ void World::flush()
         viewport_x_min = SDL_origin_col + viewport->x[0];
         viewport_y_min = SDL_origin_row + viewport->y[0];
         viewport_x_max = SDL_origin_col + viewport->x[2];
-        viewport_y_max = SDL_origin_row + viewport->x[2];
+        viewport_y_max = SDL_origin_row + viewport->y[2];
     }
 
     for(size_t SDL_row = 0; SDL_row < SDL_height; SDL_row++)
@@ -81,6 +81,8 @@ void World::flush()
                 if(world_row >= viewport_y_min && world_row <= viewport_y_max && world_col >= viewport_x_min && world_col <= viewport_x_max)
                 {
                     pix = buffer.get(world_row, world_col);
+                    if(pix == viewport_backgound) pix = Pixel(viewport->background_color, 0, -99);
+
                     hex = (pix.r << 24) + (pix.g << 16) + (pix.b << 8) + pix.a;
                     display->set(SDL_row, SDL_col, RawPixel(hex));
                 }
@@ -111,7 +113,7 @@ void World::reset()
         viewport_x_min = SDL_origin_col + viewport->x[0];
         viewport_y_min = SDL_origin_row + viewport->y[0];
         viewport_x_max = SDL_origin_col + viewport->x[2];
-        viewport_y_max = SDL_origin_row + viewport->x[2];
+        viewport_y_max = SDL_origin_row + viewport->y[2];
     }
 
     for(size_t row = 0; row < height; row++)
@@ -121,10 +123,10 @@ void World::reset()
             if(viewport != nullptr)
             {
                 // Inside viewport
-                if(row > viewport_y_min && row < viewport_y_max && col > viewport_x_min && col < viewport_x_max)
+                if(row >= viewport_y_min && row <= viewport_y_max && col >= viewport_x_min && col <= viewport_x_max)
                 {
-                    hex = viewport->background_color;
-                    buffer.set(row, col, Pixel(hex, 0, -100));
+                    hex = background_color;
+                    buffer.set(row, col, Pixel(hex, 0, -99));
                 }
                 // Outside viewport
                 else
@@ -177,7 +179,7 @@ void World::set(size_t _row, size_t _col, Pixel _pixel)
 }
 
 // Reset fps_count, animation will start from beginning
-void World::reset_fps_count(unsigned int _elapsed_frames, int _fps_reset)
+void World::resetFPSCount(unsigned int _elapsed_frames, int _fps_reset)
 {
     elapsed_frames = _elapsed_frames;
     fps_reset = _fps_reset;

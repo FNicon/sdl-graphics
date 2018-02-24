@@ -12,9 +12,9 @@ using namespace std;
 
 int main()
 {
-	World world(800, 600, 100, 100, 0x0000ff); // create World
+	World world(900, 700, 100, 100, 0x0000ff); // create World
 	
-	SDLDisplay display(600, 400); // create SDL
+	SDLDisplay display(700, 500); // create SDL
 	world.display = &display; // set World's display to SDL
 
 	Viewport viewport(250, 250, 0xffff00, 0, 1, 0x00ff00); // create Viewport
@@ -30,6 +30,9 @@ int main()
 	// Create vector of Transformations for each Polygon
 	vector<ITransform*> v1;
 	vector<ITransform*> v2;
+
+	// Create vector of Transformations for Viewport
+	vector<ITransform*> v3;
 
 	// Add Points to Polygon
 	polygon1.add(160,160);
@@ -49,9 +52,15 @@ int main()
 	polygon2.setCenter();
 	
 	// Create Transformation object
+	Translate translate;
 	Rotate rotate1, rotate2;
 
 	// Add Transformation rules
+	translate.set(5, 5, 30);
+	translate.set(5, -5, 30);
+	translate.set(-5, 5, 30);
+	translate.set(-5, -5, 30);
+
 	rotate1.set(10.0, 0);
 	rotate2.set(12.0, 0);
 
@@ -59,19 +68,27 @@ int main()
 	v1.push_back(&rotate1);
 	v2.push_back(&rotate2);
 
+	v3.push_back(&translate);
+
 	// Add Polygon and its vector of Transformation to World
 	world.addPolygon(&polygon1, &v1);
 	world.addPolygon(&polygon2, &v2);
 
-	// Render World at 60 fps
-	world.render();
+	// Add viewport Transformation to World
+	world.addViewportTrans(&v3);
 
-	
+	// Continuous animation
+	world.resetFPSCount(120, -1);
+
+	// Render World at 60 fps
+	for(int i=1; i<=60; i++) world.render(20);
+
+	/*
 	cout << "Press any key to continue.." << endl;
 
 	string s;
 	getline(cin,s);
-
+	*/
 
 	return 0;
 }

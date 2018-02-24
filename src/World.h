@@ -67,7 +67,7 @@ class World
         void set(size_t _row, size_t _col, Pixel _pixel);
 
         // Reset fps_count, animation will start from beginning
-        void reset_fps_count(unsigned int _elapsed_frames, int _fps_reset);
+        void resetFPSCount(unsigned int _elapsed_frames, int _fps_reset);
 
         // Add a polygon and transformations to World
         void addPolygon(Polygon* _polygon, vector<ITransform*>* _transform = nullptr);
