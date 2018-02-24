@@ -24,7 +24,7 @@ void World::draw()
         polygons[idx].first->fill(buffer, SDL_origin_row, SDL_origin_col);
     }
 
-    viewport->draw(buffer, SDL_origin_row, SDL_origin_col);
+    if(viewport != nullptr) viewport->draw(buffer, SDL_origin_row, SDL_origin_col);
 }
 
 // Transform all Polygons in World
@@ -43,9 +43,9 @@ void World::transform()
         }
     }
 
-    for(size_t idx = 0; idx < num_viewport_trans; idx++)
+    if(viewport != nullptr) 
     {
-        (*(viewport_trans))[idx]->transform(*viewport, fps_count);
+        for(size_t idx = 0; idx < num_viewport_trans; idx++) (*(viewport_trans))[idx]->transform(*viewport, fps_count);
     }
 }
 
@@ -86,7 +86,7 @@ void World::flush()
                 }
                 else
                 {
-                    hex = (background_color << 8);
+                    hex = background_color << 8;
                     display->set(SDL_row, SDL_col, RawPixel(hex));
                 }
             }
@@ -123,19 +123,20 @@ void World::reset()
                 // Inside viewport
                 if(row > viewport_y_min && row < viewport_y_max && col > viewport_x_min && col < viewport_x_max)
                 {
-                    hex = (viewport->background_color << 8);
+                    hex = viewport->background_color;
                     buffer.set(row, col, Pixel(hex, 0, -100));
                 }
                 // Outside viewport
                 else
                 {
-                    hex = (background_color << 8);
+                    hex = background_color;
                     buffer.set(row, col, Pixel(hex, 0, -100));
                 }
             }
             else
             {
-                buffer.set(row, col, Pixel(background_color, 0, -100));
+                hex = background_color;
+                buffer.set(row, col, Pixel(hex, 0, -100));
             }
         }
     }

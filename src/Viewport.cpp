@@ -29,7 +29,7 @@ void Viewport::draw(Buffer<Pixel>& _buffer, unsigned int _row_offset, unsigned i
     int x1, y1;
     int x2, y2;
 
-    for(size_t idx = 0; idx < num_points; idx++)
+    for(unsigned int idx = 0; idx < num_points; idx++)
     {
         x1 = x[idx];
         y1 = y[idx];

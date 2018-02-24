@@ -12,16 +12,16 @@ using namespace std;
 
 int main()
 {
-	World world(800, 600, 100, 100); // create World
+	World world(800, 600, 100, 100, 0x0000ff); // create World
 	
 	SDLDisplay display(600, 400); // create SDL
 	world.display = &display; // set World's display to SDL
 
-	Viewport viewport(250, 250, 0xff0000, 0, 1); // create Viewport
+	Viewport viewport(250, 250, 0xffff00, 0, 1, 0x00ff00); // create Viewport
 	viewport.add(1,1); // viewport upperleftmost location in SDL
 	world.viewport = &viewport; // set World's viewport to Viewport
 
-	cout << endl << "Press CTRL + C to quit." << endl;
+	//cout << endl << "Press CTRL + C to quit." << endl;
 
 	// Create Polygon
 	Polygon polygon1(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
@@ -64,14 +64,14 @@ int main()
 	world.addPolygon(&polygon2, &v2);
 
 	// Render World at 60 fps
-	world.render(60);
+	world.render();
 
-	/*
+	
 	cout << "Press any key to continue.." << endl;
 
 	string s;
 	getline(cin,s);
-	*/
+
 
 	return 0;
 }
