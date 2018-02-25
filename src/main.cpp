@@ -34,6 +34,14 @@ int main()
 	Polygon oktagon(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
 	Polygon comlabs(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
 	Polygon labtekI(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
+	Polygon tvst(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
+	Polygon pln(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
+	Polygon labtekV(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
+	Polygon labtekVI(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
+	Polygon labtekVII(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
+	Polygon labtekVIII(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
+	Polygon plazaWidya(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
+
 
 	//Polygon polygon1(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
 	//Polygon polygon2(0x83cb69, 0, 1, 0x83cb69, 0, 4);
@@ -100,6 +108,48 @@ int main()
 	labtekI.add (470,340);
 	labtekI.setCenter();
 
+	tvst.add(180,300);
+	tvst.add(280,300);
+	tvst.add(280,400);
+	tvst.add(180,400);
+	tvst.setCenter();
+
+	pln.add(350,300);
+	pln.add(450,300);
+	pln.add(450,400);
+	pln.add(350,400);
+	pln.setCenter();
+
+	labtekVI.add(130,500);
+	labtekVI.add(280,500);
+	labtekVI.add(280,600);
+	labtekVI.add(130,600);
+	labtekVI.setCenter();
+
+	labtekV.add(130,650);
+	labtekV.add(280,650);
+	labtekV.add(280,750);
+	labtekV.add(130,750);
+	labtekV.setCenter();
+
+	labtekVII.add(470,500);
+	labtekVII.add(320,500);
+	labtekVII.add(320,600);
+	labtekVII.add(470,600);
+	labtekVII.setCenter();
+
+	labtekVIII.add(470,650);
+	labtekVIII.add(320,650);
+	labtekVIII.add(320,750);
+	labtekVIII.add(470,750);
+	labtekVIII.setCenter();
+
+	plazaWidya.add(270,420);
+	plazaWidya.add(330,420);
+	plazaWidya.add(330,480);
+	plazaWidya.add(270,480);
+	plazaWidya.setCenter();
+
 	/*polygon1.add(160,160);
 	polygon1.add(220,160);
 	polygon1.add(250,212);
@@ -144,6 +194,13 @@ int main()
 	world.addPolygon(&oktagon, NULL);
 	world.addPolygon(&comlabs, NULL);
 	world.addPolygon(&labtekI, NULL);
+	world.addPolygon(&tvst, NULL);
+	world.addPolygon(&pln, NULL);
+	world.addPolygon(&labtekV, NULL);
+	world.addPolygon(&labtekVI, NULL);
+	world.addPolygon(&labtekVII, NULL);
+	world.addPolygon(&labtekVIII, NULL);
+	world.addPolygon(&plazaWidya, NULL);
 	//world.addPolygon(&polygon2, &v2);
 
 	// Add viewport Transformation to World
