@@ -12,12 +12,12 @@ using namespace std;
 
 int main()
 {
-	World world(900, 700, 100, 100, 0x0000ff); // create World
+	World world(900, 1200, 100, 100, 0x000000); // create World
 	
 	SDLDisplay display(700, 500); // create SDL
 	world.display = &display; // set World's display to SDL
 
-	Viewport viewport(250, 250, 0xffff00, 0, 1, 0x00ff00); // create Viewport
+	Viewport viewport(250, 250, 0xffff00, 0, 1, 0x000000); // create Viewport
 	world.viewport = &viewport; // set World's viewport to Viewport
 
 	viewport.add(1,1); // viewport upperleftmost location in SDL
@@ -26,32 +26,32 @@ int main()
 	//cout << endl << "Press CTRL + C to quit." << endl;
 
 	// Create Polygon
-	Polygon cadl(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
-	Polygon pau(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
+	Polygon cadl(0x9c6fba, 0, 1, 0x9c6fba, 0, 1);
+	Polygon pau(0x9c6fba, 0, 1, 0x9c6fba, 0, 2);
 	Polygon perpus(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
-	Polygon cas(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
-	Polygon labtekX(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
-	Polygon oktagon(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
-	Polygon comlabs(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
-	Polygon labtekI(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
-	Polygon tvst(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
-	Polygon pln(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
-	Polygon labtekV(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
-	Polygon labtekVI(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
-	Polygon labtekVII(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
-	Polygon labtekVIII(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
-	Polygon plazaWidya(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
+	Polygon cas(0x9c6fba, 0, 1, 0x9c6fba, 0, 4);
+	Polygon labtekX(0x9c6fba, 0, 1, 0x9c6fba, 0, 5);
+	Polygon oktagon(0x9c6fba, 0, 1, 0x9c6fba, 0, 6);
+	Polygon comlabs(0x9c6fba, 0, 1, 0x9c6fba, 0, 7);
+	Polygon labtekI(0x9c6fba, 0, 1, 0x9c6fba, 0, 8);
+	Polygon tvst(0x9c6fba, 0, 1, 0x9c6fba, 0, 9);
+	Polygon pln(0x9c6fba, 0, 1, 0x9c6fba, 0, 10);
+	Polygon labtekV(0x9c6fba, 0, 1, 0x9c6fba, 0, 11);
+	Polygon labtekVI(0x9c6fba, 0, 1, 0x9c6fba, 0, 12);
+	Polygon labtekVII(0x9c6fba, 0, 1, 0x9c6fba, 0, 13);
+	Polygon labtekVIII(0x9c6fba, 0, 1, 0x9c6fba, 0, 14);
+	Polygon plazaWidya(0x9c6fba, 0, 1, 0x9c6fba, 0, 15);
 
 
 	//Polygon polygon1(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
 	//Polygon polygon2(0x83cb69, 0, 1, 0x83cb69, 0, 4);
 
 	// Create vector of Transformations for each Polygon
-	vector<ITransform*> v1;
-	vector<ITransform*> v2;
+	//vector<ITransform*> v1;
+	//vector<ITransform*> v2;
 
 	// Create vector of Transformations for Viewport
-	vector<ITransform*> v3;
+	//vector<ITransform*> v3;
 
 	// Add Points to Polygon
 	cadl.add(100,20);
@@ -167,23 +167,23 @@ int main()
 	polygon2.setCenter();*/
 	
 	// Create Transformation object
-	Translate translate;
-	Scale scale;
-	Rotate rotate1, rotate2;
+	//Translate translate;
+	//Scale scale;
+	//Rotate rotate1, rotate2;
 
 	// Add Transformation rules
-	translate.set(5, 0, 30);
-	translate.set(0, 5, 30);
-	translate.set(0, -5, 30);
+	//translate.set(5, 0, 30);
+	//translate.set(0, 5, 30);
+	//translate.set(0, -5, 30);
 
-	rotate1.set(10.0, 0);
-	rotate2.set(12.0, 0);
+	//rotate1.set(10.0, 0);
+	//rotate2.set(12.0, 0);
 
 	// Add Transformation object to vector
-	v1.push_back(&rotate1);
-	v2.push_back(&rotate2);
+	//v1.push_back(&rotate1);
+	//v2.push_back(&rotate2);
 
-	v3.push_back(&translate);
+	//v3.push_back(&translate);
 
 	// Add Polygon and its vector of Transformation to World
 	world.addPolygon(&cadl, NULL);
@@ -204,13 +204,13 @@ int main()
 	//world.addPolygon(&polygon2, &v2);
 
 	// Add viewport Transformation to World
-	world.addViewportTrans(&v3);
+	// world.addViewportTrans(&v3);
 
 	// Continuous animation
-	world.resetFPSCount(120, -1);
+	// world.resetFPSCount(120, -1);
 
 	// Render World at 60 fps
-	for(int i=1; i<=60; i++) world.render(20);
+	world.render(60);
 
 	/*
 	cout << "Press any key to continue.." << endl;
