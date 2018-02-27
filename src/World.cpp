@@ -15,16 +15,83 @@ bool World::compare(const pair< IShape*, vector<ITransform*>* >& p1, const pair<
     return p1.first->layer < p2.first->layer;
 }
 
-// Draw and fill shapes to buffer, draw viewport
+// Clip, draw and fill shapes to buffer, draw viewport
 void World::draw()
 {
-    for(size_t idx = 0; idx < num_shapes; idx++) 
+    for(size_t idx = 0; idx < num_shapes; idx++)
     {
+        /*
+        int current_layer = shapes[idx].first->layer;
+        
+        if(viewport != nullptr)
+        {
+            int prev_center_x, prev_center_y, new_center_x, new_center_y;
+            Polygon* polygon, Circle* circle;
+
+            if(shapes[idx].first->num_points == 0)
+            {
+                circle = static_cast<Circle*>(shapes[idx].first);
+                prev_center_x = circle->x0;
+                prev_center_y = circle->y0;
+            }
+            else
+            {
+                polygon = static_cast<Polygon*>(shapes[idx].first);
+                prev_center_x = polygon->center_x;
+                prev_center_y  = polygon->center_y;
+            }
+
+            unsigned int viewport_x_max, viewport_x_min, viewport_y_max, viewport_y_min;
+
+            viewport_x_min = SDL_origin_col + viewport->x[0];
+            viewport_y_min = SDL_origin_row + viewport->y[0];
+            viewport_x_max = SDL_origin_col + viewport->x[2];
+            viewport_y_max = SDL_origin_row + viewport->y[2];
+            viewport_thickness = viewport->thickness;
+
+            // Determine new floodfill point
+
+            if(prev_center_x >= viewport_x_min + viewport_thickness && prev_center_x < viewport_x_max && prev_center_y >= viewport_y_min + viewport_thickness && prev_center_y < viewport_y_max)
+            {
+                new_center_x = prev_center_x;
+                new_center_y = prev_center_y;
+            }
+            else if(prev_center_x >= viewport_x_min && prev_center_x < viewport_x_min + viewport_thickness && prev_center_y >= viewport_y_min + viewport_thickness && prev_center_y < viewport_y_max)
+            {
+                new_center_x = viewport_x_min + viewport_thickness;
+                new_center_y = prev_center_y;
+            }
+            else if(prev_center_x >= viewport_x_max && prev_center_x < viewport_x_max + viewport_thickness && prev_center_y >= viewport_y_min + viewport_thickness && prev_center_y < viewport_y_max)
+            {
+                new_center_x = viewport_x_max - 1;
+                new_center_y = prev_center_y;
+            }
+            else if(prev_center_x >= viewport_x_min + viewport_thickness && prev_center_x < viewport_x_max && prev_center_y >= viewport_y_min && prev_center_y < viewport_y_max + viewport_thickness)
+            {
+                new_center_x = prev_center_x;
+                new_center_y = viewport_y_min + viewport_thickness;
+            }
+            else if(prev_center_x >= viewport_x_min + viewport_thickness && prev_center_x < viewport_x_max && prev_center_y >= viewport_y_max && prev_center_y < viewport_y_max + viewport_thickness)
+            {
+                new_center_x = prev_center_x;
+                new_center_y = viewport_y_max - 1;
+            }
+
+            viewport->layer = current_layer;
+            viewport->draw(buffer, SDL_origin_row, SDL_origin_col);
+        }
+        */
+        // Draw polygon
         shapes[idx].first->draw(buffer, SDL_origin_row, SDL_origin_col);
         shapes[idx].first->fill(buffer, SDL_origin_row, SDL_origin_col);
     }
 
-    if(viewport != nullptr) viewport->draw(buffer, SDL_origin_row, SDL_origin_col);
+    // Draw viewport
+    if(viewport != nullptr)
+    {
+        //viewport->layer = 100;
+        viewport->draw(buffer, SDL_origin_row, SDL_origin_col);
+    }
 }
 
 // Transform all shapes in World

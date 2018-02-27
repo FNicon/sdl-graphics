@@ -37,6 +37,9 @@ class Viewport
         int center_x;
         int center_y;
 
+        // Layer
+        int layer;
+
         // Constructor
         Viewport(unsigned int _width, unsigned int _height, unsigned int _border_color, unsigned int _border_alpha, unsigned int _border_thickness = 1, unsigned int _background_color = 0);
 

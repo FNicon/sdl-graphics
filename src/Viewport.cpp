@@ -14,6 +14,7 @@ Viewport::Viewport(unsigned int _width, unsigned int _height, unsigned int _bord
     border_alpha = _border_alpha;
     border_thickness = _border_thickness;
     background_color = _background_color;
+    layer = 100;
 }
 
 // Add coordinates

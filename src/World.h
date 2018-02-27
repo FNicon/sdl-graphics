@@ -17,7 +17,7 @@ class World
         // Comparison function for sorting
         static bool compare(const pair< IShape*, vector<ITransform*>* >& p1, const pair< IShape*, vector<ITransform*>* >& p2);
 
-        void draw(); // Draw and fill shapes to buffer, draw viewport
+        void draw(); // Clip, draw and fill shapes to buffer, draw viewport
         void transform(); // Transform all shapes in World
         void flush(); // Flush World's buffer to SDL's buffer
         void reset(); // Reset World's buffer

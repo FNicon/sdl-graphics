@@ -10,8 +10,13 @@
 
 using namespace std;
 
-int main()
+int main(int argc, char** argv)
 {
+	string arg;
+
+	if(argc == 1) arg = "--show-all";
+	else arg = argv[1];
+
 	World world(900, 1200, 100, 100, 0x000000); // create World
 	
 	SDLDisplay display(700, 500); // create SDL
@@ -29,23 +34,23 @@ int main()
 	Polygon road(0xdddddd, 0, 1, 0xdddddd, 0, 0);
 	Polygon cadl(0x9c6fba, 0, 1, 0x9c6fba, 0, 1);
 	Polygon boundaryLabtek(0x000000, 0, 1, 0x000000, 0, 2);
-	Polygon boundaryLabtek2(0x000000, 0, 1, 0x000000, 0, 2);
-	Polygon pau(0x9c6fba, 0, 1, 0x9c6fba, 0, 2);
-	Polygon perpus(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
-	Polygon cas(0x9c6fba, 0, 1, 0x9c6fba, 0, 4);
-	Polygon labtekX(0x9c6fba, 0, 1, 0x9c6fba, 0, 5);
-	Polygon oktagon(0x9c6fba, 0, 1, 0x9c6fba, 0, 6);
-	Polygon comlabs(0x9c6fba, 0, 1, 0x9c6fba, 0, 7);
-	Polygon labtekI(0x9c6fba, 0, 1, 0x9c6fba, 0, 8);
-	Polygon tvst(0x9c6fba, 0, 1, 0x9c6fba, 0, 9);
-	Polygon pln(0x9c6fba, 0, 1, 0x9c6fba, 0, 10);
-	Polygon labtekV(0x9c6fba, 0, 1, 0x9c6fba, 0, 11);
-	Polygon labtekVI(0x9c6fba, 0, 1, 0x9c6fba, 0, 12);
-	Polygon labtekVII(0x9c6fba, 0, 1, 0x9c6fba, 0, 13);
-	Polygon labtekVIII(0x9c6fba, 0, 1, 0x9c6fba, 0, 14);
-	Polygon labtekXI(0x9c6fba, 0, 1, 0x9c6fba, 0, 15);
-	Polygon plazaWidya(0x9c6fba, 0, 1, 0x9c6fba, 0, 16);
-	Circle intel(337, 300, 10, 0x9c6fba, 0, 0x9c6fba, 0, 17);
+	Polygon boundaryLabtek2(0x000000, 0, 1, 0x000000, 0, 3);
+	Polygon pau(0x9c6fba, 0, 1, 0x9c6fba, 0, 4);
+	Polygon perpus(0x9c6fba, 0, 1, 0x9c6fba, 0, 5);
+	Polygon cas(0x9c6fba, 0, 1, 0x9c6fba, 0, 6);
+	Polygon labtekX(0x9c6fba, 0, 1, 0x9c6fba, 0, 7);
+	Polygon oktagon(0x9c6fba, 0, 1, 0x9c6fba, 0, 8);
+	Polygon comlabs(0x9c6fba, 0, 1, 0x9c6fba, 0, 9);
+	Polygon labtekI(0x9c6fba, 0, 1, 0x9c6fba, 0, 10);
+	Polygon tvst(0x9c6fba, 0, 1, 0x9c6fba, 0, 11);
+	Polygon pln(0x9c6fba, 0, 1, 0x9c6fba, 0, 12);
+	Polygon labtekV(0x9c6fba, 0, 1, 0x9c6fba, 0, 13);
+	Polygon labtekVI(0x9c6fba, 0, 1, 0x9c6fba, 0, 14);
+	Polygon labtekVII(0x9c6fba, 0, 1, 0x9c6fba, 0, 15);
+	Polygon labtekVIII(0x9c6fba, 0, 1, 0x9c6fba, 0, 16);
+	Polygon labtekXI(0x9c6fba, 0, 1, 0x9c6fba, 0, 17);
+	Polygon plazaWidya(0x9c6fba, 0, 1, 0x9c6fba, 0, 18);
+	Circle intel(337, 300, 55, 0x0000ff, 0, 0x0000ff, 0, 19);
 
 	//Polygon polygon1(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
 	//Polygon polygon2(0x83cb69, 0, 1, 0x83cb69, 0, 4);
@@ -58,6 +63,7 @@ int main()
 	//vector<ITransform*> v3;
 
 	// Add Points to Polygon
+
 	cadl.add(100,10);
 	cadl.add(200,10);
 	cadl.add(200,60);
@@ -258,26 +264,31 @@ int main()
 	//v3.push_back(&translate);
 
 	// Add shape and its vector of Transformation to World
-	world.addShape(&cadl, NULL);
-	world.addShape(&road, NULL);
-	world.addShape(&boundaryLabtek, NULL);
-	world.addShape(&boundaryLabtek2, NULL);
-	world.addShape(&pau, NULL);
-	world.addShape(&perpus, NULL);
-	world.addShape(&cas, NULL);
-	world.addShape(&labtekX, NULL);
-	world.addShape(&labtekXI, NULL);
-	world.addShape(&oktagon, NULL);
-	world.addShape(&comlabs, NULL);
-	world.addShape(&labtekI, NULL);
-	world.addShape(&tvst, NULL);
-	world.addShape(&pln, NULL);
-	world.addShape(&labtekV, NULL);
-	world.addShape(&labtekVI, NULL);
-	world.addShape(&labtekVII, NULL);
-	world.addShape(&labtekVIII, NULL);
-	world.addShape(&plazaWidya, NULL);
-	world.addShape(&intel);
+	
+	if(arg == "--show-all" || arg == "--show-road") world.addShape(&road, NULL);
+
+	if(arg == "--show-all" || arg == "--show-building")
+	{
+		world.addShape(&cadl, NULL);
+		world.addShape(&boundaryLabtek, NULL);
+		world.addShape(&boundaryLabtek2, NULL);
+		world.addShape(&pau, NULL);
+		world.addShape(&perpus, NULL);
+		world.addShape(&cas, NULL);
+		world.addShape(&labtekX, NULL);
+		world.addShape(&labtekXI, NULL);
+		world.addShape(&oktagon, NULL);
+		world.addShape(&comlabs, NULL);
+		world.addShape(&labtekI, NULL);
+		world.addShape(&tvst, NULL);
+		world.addShape(&pln, NULL);
+		world.addShape(&labtekV, NULL);
+		world.addShape(&labtekVI, NULL);
+		world.addShape(&labtekVII, NULL);
+		world.addShape(&labtekVIII, NULL);
+		world.addShape(&plazaWidya, NULL);
+		world.addShape(&intel);
+	}
 
 	//world.addShape(&polygon2, &v2);
 

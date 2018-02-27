@@ -62,7 +62,7 @@ void Circle::draw(Buffer<Pixel>& _buffer, unsigned int _row_offset, unsigned int
 // Fill
 void Circle::fill(Buffer<Pixel>& _buffer, unsigned int _row_offset, unsigned int _col_offset)
 {
-    /*
+    
     Pixel polygon_pix(fill_color, fill_alpha, layer);
     queue< pair< int,int > > q;
 
@@ -92,5 +92,5 @@ void Circle::fill(Buffer<Pixel>& _buffer, unsigned int _row_offset, unsigned int
             }
         }
     }
-    */
+    
 }
