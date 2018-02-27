@@ -187,6 +187,18 @@ int main()
 	road.add(320,140);
 	road.add(320,210);
 	road.add(280,210);
+	road.add(280,140);
+	road.add(150,140);
+	road.add(150,250);
+	road.add(130,250);
+	road.add(130,140);
+	road.add(1,140);
+	road.add(1,130);
+	road.add(130,130);
+	road.add(130,60);
+	road.add(150,60);
+	road.add(150,130);
+	road.add(280,130);
 	road.add(280,50);
 	road.add(320,50);
 	road.add(320,130);
