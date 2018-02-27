@@ -28,7 +28,8 @@ int main()
 	// Create Polygon
 	Polygon cadl(0x9c6fba, 0, 1, 0x9c6fba, 0, 1);
 	Polygon road(0xdddddd, 0, 1, 0xdddddd, 0, 1);
-	Polygon labtek(0x000000, 0, 1, 0x000000, 0, 2);
+	Polygon boundaryLabtek(0x000000, 0, 1, 0x000000, 0, 2);
+	Polygon boundaryLabtek2(0x000000, 0, 1, 0x000000, 0, 2);
 	Polygon pau(0x9c6fba, 0, 1, 0x9c6fba, 0, 2);
 	Polygon perpus(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
 	Polygon cas(0x9c6fba, 0, 1, 0x9c6fba, 0, 4);
@@ -99,10 +100,14 @@ int main()
 	labtekXI.add(0,200);
 	labtekXI.setCenter();
 
-	oktagon.add(170,70);
-	oktagon.add(270,70);
-	oktagon.add(270,120);
-	oktagon.add(170,120);
+	oktagon.add(195,70);
+	oktagon.add(245,70);
+	oktagon.add(270,85);
+	oktagon.add(270,105);
+	oktagon.add(245,120);
+	oktagon.add(195,120);
+	oktagon.add(170,105);
+	oktagon.add(170,85);
 	oktagon.setCenter();
 
 	comlabs.add(330,70);
@@ -117,10 +122,18 @@ int main()
 	labtekI.add(450,200);
 	labtekI.setCenter();
 
-	tvst.add(170,150);
-	tvst.add(270,150);
-	tvst.add(270,200);
-	tvst.add(170,200);
+	tvst.add(195,150);
+	tvst.add(245,150);
+	tvst.add(245,165);
+	tvst.add(270,165);
+	tvst.add(270,185);
+	tvst.add(245,185);
+	tvst.add(245,200);
+	tvst.add(195,200);
+	tvst.add(195,185);
+	tvst.add(170,185);
+	tvst.add(170,165);
+	tvst.add(195,165);
 	tvst.setCenter();
 
 	pln.add(330,150);
@@ -185,11 +198,17 @@ int main()
 	road.add(310,500);
 	road.setCenter();
 
-	labtek.add(50,270);
-	labtek.add(50,400);
-	labtek.add(580,400);
-	labtek.add(580,270);
-	labtek.setCenter();
+	boundaryLabtek.add(50,270);
+	boundaryLabtek.add(50,400);
+	boundaryLabtek.add(280,400);
+	boundaryLabtek.add(280,270);
+	boundaryLabtek.setCenter();
+
+	boundaryLabtek2.add(320,270);
+	boundaryLabtek2.add(320,400);
+	boundaryLabtek2.add(580,400);
+	boundaryLabtek2.add(580,270);
+	boundaryLabtek2.setCenter();
 
 	/*polygon1.add(160,160);
 	polygon1.add(220,160);
@@ -229,7 +248,8 @@ int main()
 	// Add Polygon and its vector of Transformation to World
 	world.addPolygon(&cadl, NULL);
 	world.addPolygon(&road, NULL);
-	world.addPolygon(&labtek, NULL);
+	world.addPolygon(&boundaryLabtek, NULL);
+	world.addPolygon(&boundaryLabtek2, NULL);
 	world.addPolygon(&pau, NULL);
 	world.addPolygon(&perpus, NULL);
 	world.addPolygon(&cas, NULL);
