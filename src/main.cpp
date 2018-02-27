@@ -17,7 +17,7 @@ int main()
 	SDLDisplay display(700, 500); // create SDL
 	world.display = &display; // set World's display to SDL
 
-	Viewport viewport(250, 250, 0xffff00, 0, 1, 0x000000); // create Viewport
+	Viewport viewport(700, 500, 0xffff00, 0, 1, 0x000000); // create Viewport
 	world.viewport = &viewport; // set World's viewport to Viewport
 
 	viewport.add(1,1); // viewport upperleftmost location in SDL
@@ -27,6 +27,8 @@ int main()
 
 	// Create Polygon
 	Polygon cadl(0x9c6fba, 0, 1, 0x9c6fba, 0, 1);
+	Polygon road(0xdddddd, 0, 1, 0xdddddd, 0, 1);
+	Polygon labtek(0x000000, 0, 1, 0x000000, 0, 2);
 	Polygon pau(0x9c6fba, 0, 1, 0x9c6fba, 0, 2);
 	Polygon perpus(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
 	Polygon cas(0x9c6fba, 0, 1, 0x9c6fba, 0, 4);
@@ -40,7 +42,8 @@ int main()
 	Polygon labtekVI(0x9c6fba, 0, 1, 0x9c6fba, 0, 12);
 	Polygon labtekVII(0x9c6fba, 0, 1, 0x9c6fba, 0, 13);
 	Polygon labtekVIII(0x9c6fba, 0, 1, 0x9c6fba, 0, 14);
-	Polygon plazaWidya(0x9c6fba, 0, 1, 0x9c6fba, 0, 15);
+	Polygon labtekXI(0x9c6fba, 0, 1, 0x9c6fba, 0, 15);
+	Polygon plazaWidya(0x9c6fba, 0, 1, 0x9c6fba, 0, 16);
 
 
 	//Polygon polygon1(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
@@ -54,101 +57,139 @@ int main()
 	//vector<ITransform*> v3;
 
 	// Add Points to Polygon
-	cadl.add(100,20);
-	cadl.add(200,20);
-	cadl.add(200,120);
-	cadl.add(100,120);
+	cadl.add(100,10);
+	cadl.add(200,10);
+	cadl.add(200,60);
+	cadl.add(100,60);
 	cadl.setCenter();
 
 	pau.add(200,0);
 	pau.add(250,0);
-	pau.add(250,10);
+	pau.add(250,5);
+	pau.add(270,5);
 	pau.add(270,10);
-	pau.add(270,20);
-	pau.add(280,20);
-	pau.add(280,120);
-	pau.add(220,120);
-	pau.add(220,20);
-	pau.add(200,20);
+	pau.add(280,10);
+	pau.add(280,60);
+	pau.add(220,60);
+	pau.add(220,10);
+	pau.add(200,10);
 	pau.setCenter();
 
-	perpus.add(350,0);
-	perpus.add(450,0);
-	perpus.add (450,100);
-	perpus.add (350,100);
+	perpus.add(330,0);
+	perpus.add(430,0);
+	perpus.add(430,50);
+	perpus.add(330,50);
 	perpus.setCenter();
 
-	cas.add(470,0);
-	cas.add (570,0);
-	cas.add (570,100);
-	cas.add (470,100);
+	cas.add(450,0);
+	cas.add(550,0);
+	cas.add(550,50);
+	cas.add(450,50);
 	cas.setCenter();
 
-	labtekX.add(0,140);
-	labtekX.add (120,140);
-	labtekX.add (120,240);
-	labtekX.add (0,240);
+	labtekX.add(0,70);
+	labtekX.add(120,70);
+	labtekX.add(120,120);
+	labtekX.add(0,120);
 	labtekX.setCenter();
 
-	oktagon.add(180,140);
-	oktagon.add (280,140);
-	oktagon.add (280,240);
-	oktagon.add (180,240);
+	labtekXI.add(0,150);
+	labtekXI.add(120,150);
+	labtekXI.add(120,200);
+	labtekXI.add(0,200);
+	labtekXI.setCenter();
+
+	oktagon.add(170,70);
+	oktagon.add(270,70);
+	oktagon.add(270,120);
+	oktagon.add(170,120);
 	oktagon.setCenter();
 
-	comlabs.add(350,140);
-	comlabs.add (450,140);
-	comlabs.add (450,240);
-	comlabs.add (350,240);
+	comlabs.add(330,70);
+	comlabs.add(430,70);
+	comlabs.add(430,120);
+	comlabs.add(330,120);
 	comlabs.setCenter();
 
-	labtekI.add(470,140);
-	labtekI.add (570,140);
-	labtekI.add (570,340);
-	labtekI.add (470,340);
+	labtekI.add(450,70);
+	labtekI.add(550,70);
+	labtekI.add(550,200);
+	labtekI.add(450,200);
 	labtekI.setCenter();
 
-	tvst.add(180,300);
-	tvst.add(280,300);
-	tvst.add(280,400);
-	tvst.add(180,400);
+	tvst.add(170,150);
+	tvst.add(270,150);
+	tvst.add(270,200);
+	tvst.add(170,200);
 	tvst.setCenter();
 
-	pln.add(350,300);
-	pln.add(450,300);
-	pln.add(450,400);
-	pln.add(350,400);
+	pln.add(330,150);
+	pln.add(430,150);
+	pln.add(430,200);
+	pln.add(330,200);
 	pln.setCenter();
 
-	labtekVI.add(130,500);
-	labtekVI.add(280,500);
-	labtekVI.add(280,600);
-	labtekVI.add(130,600);
+	labtekVI.add(80,280);
+	labtekVI.add(280,280);
+	labtekVI.add(280,330);
+	labtekVI.add(80,330);
 	labtekVI.setCenter();
 
-	labtekV.add(130,650);
-	labtekV.add(280,650);
-	labtekV.add(280,750);
-	labtekV.add(130,750);
+	labtekV.add(80,345);
+	labtekV.add(280,345);
+	labtekV.add(280,395);
+	labtekV.add(80,395);
 	labtekV.setCenter();
 
-	labtekVII.add(470,500);
-	labtekVII.add(320,500);
-	labtekVII.add(320,600);
-	labtekVII.add(470,600);
+	labtekVII.add(520,280);
+	labtekVII.add(320,280);
+	labtekVII.add(320,330);
+	labtekVII.add(520,330);
 	labtekVII.setCenter();
 
-	labtekVIII.add(470,650);
-	labtekVIII.add(320,650);
-	labtekVIII.add(320,750);
-	labtekVIII.add(470,750);
+	labtekVIII.add(520,345);
+	labtekVIII.add(320,345);
+	labtekVIII.add(320,395);
+	labtekVIII.add(520,395);
 	labtekVIII.setCenter();
 
-	plazaWidya.add(270,420);
-	plazaWidya.add(330,420);
-	plazaWidya.add(330,480);
-	plazaWidya.add(270,480);
+	plazaWidya.add(280,210);
+	plazaWidya.add(320,210);
+	plazaWidya.add(340,225);
+	plazaWidya.add(320,240);
+	plazaWidya.add(280,240);
+	plazaWidya.add(260,225);
 	plazaWidya.setCenter();
+
+	road.add(290,500);
+	road.add(290,420);
+	road.add(1,420);
+	road.add(1,400);
+	road.add(30,400);
+	road.add(30,270);
+	road.add(1,270);
+	road.add(1,250);
+	road.add(580,250);
+	road.add(580,140);
+	road.add(320,140);
+	road.add(320,210);
+	road.add(280,210);
+	road.add(280,50);
+	road.add(320,50);
+	road.add(320,130);
+	road.add(580,130);
+	road.add(580,1);
+	road.add(600,1);
+	road.add(600,420);
+	road.add(310,420);
+	road.add(310,500);
+	road.setCenter();
+
+	labtek.add(50,270);
+	labtek.add(50,400);
+	labtek.add(580,400);
+	labtek.add(580,270);
+	labtek.setCenter();
 
 	/*polygon1.add(160,160);
 	polygon1.add(220,160);
@@ -187,10 +228,13 @@ int main()
 
 	// Add Polygon and its vector of Transformation to World
 	world.addPolygon(&cadl, NULL);
+	world.addPolygon(&road, NULL);
+	world.addPolygon(&labtek, NULL);
 	world.addPolygon(&pau, NULL);
 	world.addPolygon(&perpus, NULL);
 	world.addPolygon(&cas, NULL);
 	world.addPolygon(&labtekX, NULL);
+	world.addPolygon(&labtekXI, NULL);
 	world.addPolygon(&oktagon, NULL);
 	world.addPolygon(&comlabs, NULL);
 	world.addPolygon(&labtekI, NULL);
@@ -201,6 +245,7 @@ int main()
 	world.addPolygon(&labtekVII, NULL);
 	world.addPolygon(&labtekVIII, NULL);
 	world.addPolygon(&plazaWidya, NULL);
+
 	//world.addPolygon(&polygon2, &v2);
 
 	// Add viewport Transformation to World
