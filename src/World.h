@@ -3,7 +3,7 @@
 #include "Buffer.h"
 #include "Pixel.h"
 #include "SDLDisplay.h"
-#include "Polygon.h"
+#include "IShape.h"
 #include "ITransform.h"
 #include "Viewport.h"
 
@@ -15,10 +15,10 @@ class World
 {
     private:
         // Comparison function for sorting
-        static bool compare(const pair< Polygon*, vector<ITransform*>* >& p1, const pair< Polygon*, vector<ITransform*>* >& p2);
+        static bool compare(const pair< IShape*, vector<ITransform*>* >& p1, const pair< IShape*, vector<ITransform*>* >& p2);
 
-        void draw(); // Draw and fill polygon to buffer, draw viewport
-        void transform(); // Transform all Polygons in World
+        void draw(); // Draw and fill shapes to buffer, draw viewport
+        void transform(); // Transform all shapes in World
         void flush(); // Flush World's buffer to SDL's buffer
         void reset(); // Reset World's buffer
 
@@ -51,11 +51,11 @@ class World
         vector<ITransform*>* viewport_trans;
 
         // Counters
-        size_t num_polygon; // Number of polygons
+        size_t num_shapes; // Number of shapes
         size_t num_viewport_trans; // Number of viewport transformations
 
-        // List of pair (pointer to Polygon, pointer to its transformations)
-        vector< pair< Polygon*, vector<ITransform*>* > > polygons;
+        // List of pair (pointer to Shapes, pointer to its transformations)
+        vector< pair< IShape*, vector<ITransform*>* > > shapes;
 
         // Constructors
         World(size_t _width, size_t _height, unsigned int _SDL_origin_row, unsigned int _SDL_origin_col, unsigned int _background_color = 0);
@@ -69,8 +69,8 @@ class World
         // Reset fps_count, animation will start from beginning
         void resetFPSCount(unsigned int _elapsed_frames, int _fps_reset);
 
-        // Add a polygon and transformations to World
-        void addPolygon(Polygon* _polygon, vector<ITransform*>* _transform = nullptr);
+        // Add a shape and its transformations to World
+        void addShape(IShape* _shape, vector<ITransform*>* _transform = nullptr);
 
         // Add viewport transformations
         void addViewportTrans(vector<ITransform*>* _transform = nullptr);

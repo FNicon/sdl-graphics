@@ -1,27 +1,22 @@
 #pragma once
 
-#include "Buffer.h"
-#include "Pixel.h"
+#include "IShape.h"
 
-class Circle
+class Circle : public IShape
 {
     public:
-        // Coordinate
-        int x0, y0;
-        int r;
-
-        // Color
-        unsigned int color;
-
-        // Transparency
-        unsigned int alpha;
-
-        // Layer
-        int layer;
+        int x0, y0; // Center point
+        int r; // Radius
 
         // Constructor
-        Circle(int _x0, int _y0, int _r, unsigned int _color, unsigned int _alpha, int _layer = 0);
+        Circle(int _x0, int _y0, int _r, unsigned int _border_color, unsigned int _border_alpha, unsigned int _fill_color, unsigned int _fill_alpha, int _layer = 0);
 
-        // Draw circle
+        // Set center point
+        void setCenter();
+
+        // Draw
         void draw(Buffer<Pixel>& _buffer, unsigned int _row_offset, unsigned int _col_offset);
+
+        // Fill
+        void fill(Buffer<Pixel>& _buffer, unsigned int _row_offset, unsigned int _col_offset);
 };

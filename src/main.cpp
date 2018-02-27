@@ -17,7 +17,7 @@ int main()
 	SDLDisplay display(700, 500); // create SDL
 	world.display = &display; // set World's display to SDL
 
-	Viewport viewport(700, 500, 0xffff00, 0, 1, 0x000000); // create Viewport
+	Viewport viewport(698, 498, 0xffff00, 0, 1, 0x000000); // create Viewport
 	world.viewport = &viewport; // set World's viewport to Viewport
 
 	viewport.add(1,1); // viewport upperleftmost location in SDL
@@ -25,9 +25,9 @@ int main()
 
 	//cout << endl << "Press CTRL + C to quit." << endl;
 
-	// Create Polygon
+	// Create shape
+	Polygon road(0xdddddd, 0, 1, 0xdddddd, 0, 0);
 	Polygon cadl(0x9c6fba, 0, 1, 0x9c6fba, 0, 1);
-	Polygon road(0xdddddd, 0, 1, 0xdddddd, 0, 1);
 	Polygon boundaryLabtek(0x000000, 0, 1, 0x000000, 0, 2);
 	Polygon boundaryLabtek2(0x000000, 0, 1, 0x000000, 0, 2);
 	Polygon pau(0x9c6fba, 0, 1, 0x9c6fba, 0, 2);
@@ -45,12 +45,12 @@ int main()
 	Polygon labtekVIII(0x9c6fba, 0, 1, 0x9c6fba, 0, 14);
 	Polygon labtekXI(0x9c6fba, 0, 1, 0x9c6fba, 0, 15);
 	Polygon plazaWidya(0x9c6fba, 0, 1, 0x9c6fba, 0, 16);
-
+	Circle intel(337, 300, 10, 0x9c6fba, 0, 0x9c6fba, 0, 17);
 
 	//Polygon polygon1(0x9c6fba, 0, 1, 0x9c6fba, 0, 3);
 	//Polygon polygon2(0x83cb69, 0, 1, 0x83cb69, 0, 4);
 
-	// Create vector of Transformations for each Polygon
+	// Create vector of Transformations for each shape
 	//vector<ITransform*> v1;
 	//vector<ITransform*> v2;
 
@@ -257,28 +257,29 @@ int main()
 
 	//v3.push_back(&translate);
 
-	// Add Polygon and its vector of Transformation to World
-	world.addPolygon(&cadl, NULL);
-	world.addPolygon(&road, NULL);
-	world.addPolygon(&boundaryLabtek, NULL);
-	world.addPolygon(&boundaryLabtek2, NULL);
-	world.addPolygon(&pau, NULL);
-	world.addPolygon(&perpus, NULL);
-	world.addPolygon(&cas, NULL);
-	world.addPolygon(&labtekX, NULL);
-	world.addPolygon(&labtekXI, NULL);
-	world.addPolygon(&oktagon, NULL);
-	world.addPolygon(&comlabs, NULL);
-	world.addPolygon(&labtekI, NULL);
-	world.addPolygon(&tvst, NULL);
-	world.addPolygon(&pln, NULL);
-	world.addPolygon(&labtekV, NULL);
-	world.addPolygon(&labtekVI, NULL);
-	world.addPolygon(&labtekVII, NULL);
-	world.addPolygon(&labtekVIII, NULL);
-	world.addPolygon(&plazaWidya, NULL);
+	// Add shape and its vector of Transformation to World
+	world.addShape(&cadl, NULL);
+	world.addShape(&road, NULL);
+	world.addShape(&boundaryLabtek, NULL);
+	world.addShape(&boundaryLabtek2, NULL);
+	world.addShape(&pau, NULL);
+	world.addShape(&perpus, NULL);
+	world.addShape(&cas, NULL);
+	world.addShape(&labtekX, NULL);
+	world.addShape(&labtekXI, NULL);
+	world.addShape(&oktagon, NULL);
+	world.addShape(&comlabs, NULL);
+	world.addShape(&labtekI, NULL);
+	world.addShape(&tvst, NULL);
+	world.addShape(&pln, NULL);
+	world.addShape(&labtekV, NULL);
+	world.addShape(&labtekVI, NULL);
+	world.addShape(&labtekVII, NULL);
+	world.addShape(&labtekVIII, NULL);
+	world.addShape(&plazaWidya, NULL);
+	world.addShape(&intel);
 
-	//world.addPolygon(&polygon2, &v2);
+	//world.addShape(&polygon2, &v2);
 
 	// Add viewport Transformation to World
 	// world.addViewportTrans(&v3);

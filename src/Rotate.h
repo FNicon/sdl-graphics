@@ -41,7 +41,7 @@ class Rotate : public ITransform
         void set(int _vertex_idx, double _angle, int _frame = -1); // using polygon's vertex
         void set(int _origin_x, int _origin_y, double _angle, int _frame = -1); // using fixed-positioned point
 
-        // Rotate polygon by counterclockwise angle relative to pivot every frame
-        void transform(Polygon& _polygon, unsigned int _fps_count);
+        // Rotate shape by counterclockwise angle relative to pivot every frame
+        void transform(IShape* _shape, unsigned int _fps_count);
         void transform(Viewport& _viewport, unsigned int _fps_count);
 };

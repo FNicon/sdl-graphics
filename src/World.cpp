@@ -10,35 +10,35 @@ using namespace std;
 /* Private access */
 
 // Comparison function for sorting
-bool World::compare(const pair< Polygon*, vector<ITransform*>* >& p1, const pair< Polygon*, vector<ITransform*>* >& p2)
+bool World::compare(const pair< IShape*, vector<ITransform*>* >& p1, const pair< IShape*, vector<ITransform*>* >& p2)
 {
     return p1.first->layer < p2.first->layer;
 }
 
-// Draw and fill polygon to buffer, draw viewport
+// Draw and fill shapes to buffer, draw viewport
 void World::draw()
 {
-    for(size_t idx = 0; idx < num_polygon; idx++) 
+    for(size_t idx = 0; idx < num_shapes; idx++) 
     {
-        polygons[idx].first->draw(buffer, SDL_origin_row, SDL_origin_col);
-        polygons[idx].first->fill(buffer, SDL_origin_row, SDL_origin_col);
+        shapes[idx].first->draw(buffer, SDL_origin_row, SDL_origin_col);
+        shapes[idx].first->fill(buffer, SDL_origin_row, SDL_origin_col);
     }
 
     if(viewport != nullptr) viewport->draw(buffer, SDL_origin_row, SDL_origin_col);
 }
 
-// Transform all Polygons in World
+// Transform all shapes in World
 void World::transform()
 {
-    for(size_t idx = 0; idx < num_polygon; idx++)
+    for(size_t idx = 0; idx < num_shapes; idx++)
     {
-        if(polygons[idx].second != nullptr)
+        if(shapes[idx].second != nullptr)
         {
-            size_t transformations = polygons[idx].second->size();
+            size_t transformations = shapes[idx].second->size();
 
             for(size_t t = 0; t < transformations; t++)
             {
-                (*(polygons[idx].second))[t]->transform(*(polygons[idx].first), fps_count);
+                (*(shapes[idx].second))[t]->transform(shapes[idx].first, fps_count);
             }
         }
     }
@@ -155,7 +155,7 @@ World::World(size_t _width, size_t _height, unsigned int _SDL_origin_row, unsign
     SDL_origin_col = _SDL_origin_col;
     background_color = _background_color;
 
-    num_polygon = 0;
+    num_shapes = 0;
     num_viewport_trans = 0;
     fps_count = 0;
 }
@@ -185,11 +185,11 @@ void World::resetFPSCount(unsigned int _elapsed_frames, int _fps_reset)
     fps_reset = _fps_reset;
 }
 
-// Add a polygon to World
-void World::addPolygon(Polygon* _polygon, vector<ITransform*>* _transform)
+// Add a shape to World
+void World::addShape(IShape* _shape, vector<ITransform*>* _transform)
 {
-    polygons.push_back(make_pair(_polygon, _transform));
-    num_polygon++;
+    shapes.push_back(make_pair(_shape, _transform));
+    num_shapes++;
 }
 
 // Add viewport transformations
@@ -202,7 +202,7 @@ void World::addViewportTrans(vector<ITransform*>* _transform)
 // Render
 void World::render(unsigned int fps)
 {
-    sort(polygons.begin(), polygons.end(), compare);
+    if(!is_sorted(shapes.begin(), shapes.end(), compare)) sort(shapes.begin(), shapes.end(), compare);
 
     if(fps != 0)
     {

@@ -17,8 +17,8 @@ void Translate::set(double _x_offset, double _y_offset, int _frame)
     num_rules++;
 }
 
-// Translate polygon by offset every frame
-void Translate::transform(Polygon& _polygon, unsigned int _fps_count)
+// Translate shape by offset every frame
+void Translate::transform(IShape* _shape, unsigned int _fps_count)
 {
     // Ignore expired rules
     unsigned int total_fps = 0;
@@ -46,15 +46,28 @@ void Translate::transform(Polygon& _polygon, unsigned int _fps_count)
     // Apply valid rule if any
     if(rule_idx != -1)
     {
-        size_t num_points = _polygon.num_points;
+        size_t num_points = _shape->num_points;
 
-        for(size_t idx = 0; idx < num_points; idx++)
+        if(_shape->num_points == 0) // circle
         {
-            _polygon.x[idx] += x_offset[rule_idx];
-            _polygon.y[idx] += y_offset[rule_idx];
-        }
+            Circle* _circle = static_cast<Circle*>(_shape);
 
-        _polygon.setCenter();
+            _circle->x0 += x_offset[rule_idx];
+            _circle->y0 += y_offset[rule_idx];
+            _circle->setCenter();
+        }
+        else // polygon
+        {
+            Polygon* _polygon = static_cast<Polygon*>(_shape);
+
+            for(size_t idx = 0; idx < num_points; idx++)
+            {
+                _polygon->x[idx] += x_offset[rule_idx];
+                _polygon->y[idx] += y_offset[rule_idx];
+            }
+
+            _polygon->setCenter();
+        }
     }
 }
 

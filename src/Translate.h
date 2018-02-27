@@ -23,7 +23,7 @@ class Translate : public ITransform
         // Add new translate rule
         void set(double _x_offset, double _y_offset, int _frame = -1);
 
-        // Translate polygon by offset every frame
-        void transform(Polygon& _polygon, unsigned int _fps_count);
+        // Translate shape by offset every frame
+        void transform(IShape* _shape, unsigned int _fps_count);
         void transform(Viewport& _viewport, unsigned int _fps_count);
 };

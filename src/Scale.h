@@ -40,7 +40,7 @@ class Scale : public ITransform
         void set(int _vertex_idx, double _multiplier, int _frame = -1); // using polygon's vertex
         void set(int _origin_x, int _origin_y, double _multiplier, int _frame = -1); // using fixed-positioned point
 
-        // Scale polygon by multiplier relative to origin every frame
-        void transform(Polygon& _polygon, unsigned int _fps_count);
+        // Scale shape by multiplier relative to origin every frame
+        void transform(IShape* _shape, unsigned int _fps_count);
         void transform(Viewport& _viewport, unsigned int _fps_count);
 };

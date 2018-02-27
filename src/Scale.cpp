@@ -41,8 +41,8 @@ void Scale::set(int _origin_x, int _origin_y, double _multiplier, int _frame)
     num_rules++;
 }
 
-// Scale polygon by multiplier relative to origin every frame
-void Scale::transform(Polygon& _polygon, unsigned int _fps_count)
+// Scale shape by multiplier relative to origin every frame
+void Scale::transform(IShape* _shape, unsigned int _fps_count)
 {
     // Ignore expired rules
     unsigned int total_fps = 0;
@@ -70,38 +70,60 @@ void Scale::transform(Polygon& _polygon, unsigned int _fps_count)
     // Apply valid rule if any
     if(rule_idx != -1)
     {
-        size_t num_points = _polygon.num_points;
+        size_t num_points = _shape->num_points;
         int relative_x, relative_y;
 
-        for(size_t idx = 0; idx < num_points; idx++)
+        if(num_points == 0) // circle
         {
+            Circle* _circle = static_cast<Circle*>(_shape);
+
             if(mode[rule_idx] == SCALE_FIXED)
             {
-                relative_x = _polygon.x[idx] - origin_x[rule_idx];
-                relative_y = _polygon.y[idx] - origin_y[rule_idx];
+                relative_x = _circle->x0 - origin_x[rule_idx];
+                relative_y = _circle->y0 - origin_y[rule_idx];
 
-                _polygon.x[idx] = relative_x * multiplier[rule_idx] + origin_x[rule_idx];
-                _polygon.y[idx] = relative_y * multiplier[rule_idx] + origin_y[rule_idx];
+                _circle->x0 = relative_x * multiplier[rule_idx] + origin_x[rule_idx];
+                _circle->y0 = relative_y * multiplier[rule_idx] + origin_y[rule_idx];
+                _circle->r *= multiplier[rule_idx];
             }
-            else if(mode[rule_idx] == SCALE_VERTEX)
-            {
-                relative_x = _polygon.x[idx] - _polygon.x[origin_vertex[rule_idx]];
-                relative_y = _polygon.y[idx] - _polygon.y[origin_vertex[rule_idx]];
+            else if(mode[rule_idx] == SCALE_CENTER) _circle->r *= multiplier[rule_idx];
 
-                _polygon.x[idx] = relative_x * multiplier[rule_idx] + _polygon.x[origin_vertex[rule_idx]];
-                _polygon.y[idx] = relative_y * multiplier[rule_idx] + _polygon.y[origin_vertex[rule_idx]];
-            }
-            else
-            {
-                relative_x = _polygon.x[idx] - _polygon.center_x;
-                relative_y = _polygon.y[idx] - _polygon.center_y;
-
-                _polygon.x[idx] = relative_x * multiplier[rule_idx] + _polygon.center_x;
-                _polygon.y[idx] = relative_y * multiplier[rule_idx] + _polygon.center_y;
-            }
+            _circle->setCenter();
         }
+        else // polygon
+        {
+            Polygon* _polygon = static_cast<Polygon*>(_shape);
 
-        if(mode[rule_idx] == SCALE_FIXED || mode[rule_idx] == SCALE_VERTEX) _polygon.setCenter();
+            for(size_t idx = 0; idx < num_points; idx++)
+            {
+                if(mode[rule_idx] == SCALE_FIXED)
+                {
+                    relative_x = _polygon->x[idx] - origin_x[rule_idx];
+                    relative_y = _polygon->y[idx] - origin_y[rule_idx];
+
+                    _polygon->x[idx] = relative_x * multiplier[rule_idx] + origin_x[rule_idx];
+                    _polygon->y[idx] = relative_y * multiplier[rule_idx] + origin_y[rule_idx];
+                }
+                else if(mode[rule_idx] == SCALE_VERTEX)
+                {
+                    relative_x = _polygon->x[idx] - _polygon->x[origin_vertex[rule_idx]];
+                    relative_y = _polygon->y[idx] - _polygon->y[origin_vertex[rule_idx]];
+
+                    _polygon->x[idx] = relative_x * multiplier[rule_idx] + _polygon->x[origin_vertex[rule_idx]];
+                    _polygon->y[idx] = relative_y * multiplier[rule_idx] + _polygon->y[origin_vertex[rule_idx]];
+                }
+                else
+                {
+                    relative_x = _polygon->x[idx] - _polygon->center_x;
+                    relative_y = _polygon->y[idx] - _polygon->center_y;
+
+                    _polygon->x[idx] = relative_x * multiplier[rule_idx] + _polygon->center_x;
+                    _polygon->y[idx] = relative_y * multiplier[rule_idx] + _polygon->center_y;
+                }
+            }
+
+            if(mode[rule_idx] == SCALE_FIXED || mode[rule_idx] == SCALE_VERTEX) _polygon->setCenter();
+        }
     }
 }
 

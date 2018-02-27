@@ -1,37 +1,22 @@
 #pragma once
 
+#include "IShape.h"
+
 #include <vector>
 
-#include "Buffer.h"
-#include "Pixel.h"
-
-class Polygon
+class Polygon : public IShape
 {
     public:
         // Points of polygon
         vector<double> x; // x coordinates
         vector<double> y; // y coordinates
 
-        // Number of points
-        size_t num_points;
-
-        // Color
-        unsigned int border_color;
-        unsigned int fill_color;
-
-        // Transparency
-        unsigned int border_alpha;
-        unsigned int fill_alpha;
-
-        // Border thickness
-        unsigned int border_thickness;
-
-        // Layer
-        int layer;
-
         // Center point
         int center_x;
         int center_y;
+
+        // Border thickness
+        unsigned int border_thickness;
 
         // Constructor
         Polygon(unsigned int _border_color, unsigned int _border_alpha, unsigned int _border_thickness, unsigned int _fill_color, unsigned int _fill_alpha, int _layer = 0);
