@@ -17,7 +17,7 @@ int main(int argc, char** argv)
 	if(argc == 1) arg = "--show-all";
 	else arg = argv[1];
 
-	World world(900, 1200, 100, 100, 0x000000); // create World
+	World world(2000, 3500, 700, 500, 0x000000); // create World
 	
 	SDLDisplay display(700, 500); // create SDL
 	world.display = &display; // set World's display to SDL
@@ -56,7 +56,7 @@ int main(int argc, char** argv)
 	//Polygon polygon2(0x83cb69, 0, 1, 0x83cb69, 0, 4);
 
 	// Create vector of Transformations for each shape
-	//vector<ITransform*> v1;
+	vector<ITransform*> v;
 	//vector<ITransform*> v2;
 
 	// Create vector of Transformations for Viewport
@@ -246,7 +246,9 @@ int main(int argc, char** argv)
 	
 	// Create Transformation object
 	//Translate translate;
-	//Scale scale;
+	Scale scale;
+	scale.set(350, 250, 1.0, 60);
+	scale.set(350, 250, 1.2, 1);
 	//Rotate rotate1, rotate2;
 
 	// Add Transformation rules
@@ -258,36 +260,36 @@ int main(int argc, char** argv)
 	//rotate2.set(12.0, 0);
 
 	// Add Transformation object to vector
-	//v1.push_back(&rotate1);
+	v.push_back(&scale);
 	//v2.push_back(&rotate2);
 
 	//v3.push_back(&translate);
 
 	// Add shape and its vector of Transformation to World
 	
-	if(arg == "--show-all" || arg == "--show-road") world.addShape(&road, NULL);
+	if(arg == "--show-all" || arg == "--show-road") world.addShape(&road, &v);
 
 	if(arg == "--show-all" || arg == "--show-building")
 	{
-		world.addShape(&cadl, NULL);
-		world.addShape(&boundaryLabtek, NULL);
-		world.addShape(&boundaryLabtek2, NULL);
-		world.addShape(&pau, NULL);
-		world.addShape(&perpus, NULL);
-		world.addShape(&cas, NULL);
-		world.addShape(&labtekX, NULL);
-		world.addShape(&labtekXI, NULL);
-		world.addShape(&oktagon, NULL);
-		world.addShape(&comlabs, NULL);
-		world.addShape(&labtekI, NULL);
-		world.addShape(&tvst, NULL);
-		world.addShape(&pln, NULL);
-		world.addShape(&labtekV, NULL);
-		world.addShape(&labtekVI, NULL);
-		world.addShape(&labtekVII, NULL);
-		world.addShape(&labtekVIII, NULL);
-		world.addShape(&plazaWidya, NULL);
-		world.addShape(&intel);
+		world.addShape(&cadl, &v);
+		world.addShape(&boundaryLabtek, &v);
+		world.addShape(&boundaryLabtek2, &v);
+		world.addShape(&pau, &v);
+		world.addShape(&perpus, &v);
+		world.addShape(&cas, &v);
+		world.addShape(&labtekX, &v);
+		world.addShape(&labtekXI, &v);
+		world.addShape(&oktagon, &v);
+		world.addShape(&comlabs, &v);
+		world.addShape(&labtekI, &v);
+		world.addShape(&tvst, &v);
+		world.addShape(&pln, &v);
+		world.addShape(&labtekV, &v);
+		world.addShape(&labtekVI, &v);
+		world.addShape(&labtekVII, &v);
+		world.addShape(&labtekVIII, &v);
+		world.addShape(&plazaWidya, &v);
+		world.addShape(&intel,&v);
 	}
 
 	//world.addShape(&polygon2, &v2);
