@@ -56,8 +56,8 @@ int main(int argc, char** argv)
 	//Polygon polygon2(0x83cb69, 0, 1, 0x83cb69, 0, 4);
 
 	// Create vector of Transformations for each shape
-	vector<ITransform*> v;
-	//vector<ITransform*> v2;
+	vector<ITransform*> v1;
+	vector<ITransform*> v2;
 
 	// Create vector of Transformations for Viewport
 	//vector<ITransform*> v3;
@@ -246,9 +246,12 @@ int main(int argc, char** argv)
 	
 	// Create Transformation object
 	//Translate translate;
-	Scale scale;
-	scale.set(350, 250, 1.0, 60);
-	scale.set(350, 250, 1.2, 1);
+	Scale scale1, scale2;
+	scale1.set(350, 250, 1.0, 10);
+	scale1.set(350, 250, 1.5, 1);
+	scale2.set(1.0, 10);
+	scale2.set(1.5, 1);
+
 	//Rotate rotate1, rotate2;
 
 	// Add Transformation rules
@@ -260,36 +263,37 @@ int main(int argc, char** argv)
 	//rotate2.set(12.0, 0);
 
 	// Add Transformation object to vector
-	v.push_back(&scale);
+	v1.push_back(&scale1);
+	v2.push_back(&scale2);
 	//v2.push_back(&rotate2);
 
 	//v3.push_back(&translate);
 
 	// Add shape and its vector of Transformation to World
 	
-	if(arg == "--show-all" || arg == "--show-road") world.addShape(&road, &v);
+	if(arg == "--show-all" || arg == "--show-road") world.addShape(&road, &v1);
 
 	if(arg == "--show-all" || arg == "--show-building")
 	{
-		world.addShape(&cadl, &v);
-		world.addShape(&boundaryLabtek, &v);
-		world.addShape(&boundaryLabtek2, &v);
-		world.addShape(&pau, &v);
-		world.addShape(&perpus, &v);
-		world.addShape(&cas, &v);
-		world.addShape(&labtekX, &v);
-		world.addShape(&labtekXI, &v);
-		world.addShape(&oktagon, &v);
-		world.addShape(&comlabs, &v);
-		world.addShape(&labtekI, &v);
-		world.addShape(&tvst, &v);
-		world.addShape(&pln, &v);
-		world.addShape(&labtekV, &v);
-		world.addShape(&labtekVI, &v);
-		world.addShape(&labtekVII, &v);
-		world.addShape(&labtekVIII, &v);
-		world.addShape(&plazaWidya, &v);
-		world.addShape(&intel,&v);
+		world.addShape(&cadl, &v1);
+		world.addShape(&boundaryLabtek, &v1);
+		world.addShape(&boundaryLabtek2, &v1);
+		world.addShape(&pau, &v1);
+		world.addShape(&perpus, &v1);
+		world.addShape(&cas, &v1);
+		world.addShape(&labtekX, &v1);
+		world.addShape(&labtekXI, &v1);
+		world.addShape(&oktagon, &v1);
+		world.addShape(&comlabs, &v1);
+		world.addShape(&labtekI, &v1);
+		world.addShape(&tvst, &v1);
+		world.addShape(&pln, &v1);
+		world.addShape(&labtekV, &v1);
+		world.addShape(&labtekVI, &v1);
+		world.addShape(&labtekVII, &v1);
+		world.addShape(&labtekVIII, &v1);
+		world.addShape(&plazaWidya, &v1);
+		world.addShape(&intel,&v2);
 	}
 
 	//world.addShape(&polygon2, &v2);
@@ -301,7 +305,7 @@ int main(int argc, char** argv)
 	// world.resetFPSCount(120, -1);
 
 	// Render World at 60 fps
-	world.render(60);
+	world.render(10);
 
 	/*
 	cout << "Press any key to continue.." << endl;
