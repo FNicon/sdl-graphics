@@ -1,7 +1,8 @@
 #include <iostream>
 
 #include "World.h"
-#include "SDLDisplay.h"
+//#include "SDLDisplay.h"
+#include "Framebuffer.h"
 #include "Polygon.h"
 #include "Translate.h"
 #include "Scale.h"
@@ -17,9 +18,9 @@ int main(int argc, char** argv)
 	if(argc == 1) arg = "--show-all";
 	else arg = argv[1];
 
-	World world(2000, 3500, 700, 500, 0x000000); // create World
+	World world(3000, 4000, 700, 500, 0x000000); // create World
 	
-	SDLDisplay display(700, 500); // create SDL
+	Framebuffer display; // create Framebuffer
 	world.display = &display; // set World's display to SDL
 
 	Viewport viewport(698, 498, 0xffff00, 0, 1, 0x000000); // create Viewport
@@ -247,10 +248,12 @@ int main(int argc, char** argv)
 	// Create Transformation object
 	//Translate translate;
 	Scale scale1, scale2;
+	
 	scale1.set(350, 250, 1.0, 10);
 	scale1.set(350, 250, 1.5, 1);
 	scale2.set(1.0, 10);
 	scale2.set(1.5, 1);
+	
 
 	//Rotate rotate1, rotate2;
 
@@ -296,7 +299,7 @@ int main(int argc, char** argv)
 		world.addShape(&intel,&v2);
 	}
 
-	//world.addShape(&polygon2, &v2);
+	//world.addShape(&polygon2, &v1);
 
 	// Add viewport Transformation to World
 	// world.addViewportTrans(&v3);
@@ -305,7 +308,7 @@ int main(int argc, char** argv)
 	// world.resetFPSCount(120, -1);
 
 	// Render World at 60 fps
-	world.render(10);
+	world.render(5);
 
 	/*
 	cout << "Press any key to continue.." << endl;

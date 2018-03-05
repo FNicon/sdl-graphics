@@ -2,7 +2,8 @@
 
 #include "Buffer.h"
 #include "Pixel.h"
-#include "SDLDisplay.h"
+//#include "SDLDisplay.h"
+#include "Framebuffer.h"
 #include "IShape.h"
 #include "ITransform.h"
 #include "Viewport.h"
@@ -37,8 +38,8 @@ class World
         // Background color
         unsigned int background_color;
 
-        // Pointer to SDL Display
-        SDLDisplay* display = nullptr;
+        // Pointer to Framebuffer
+        Framebuffer* display = nullptr;
 
         // SDL Display's origin point relative to World
         unsigned int SDL_origin_row;

@@ -16,6 +16,8 @@ class Buffer
         Type* data = nullptr;
 
         // Constructor
+        Buffer() {}
+
         Buffer(size_t _width, size_t _height)
         {
             width = _width;
@@ -38,5 +40,14 @@ class Buffer
         void set(size_t _row, size_t _col, Type _type)
         {
             if(_row >= 0 && _row < height && _col >= 0 && _col < width) data[width * _row + _col] = _type;
+        }
+
+        // Allocate
+        void allocate(size_t _width, size_t _height)
+        {
+            width = _width;
+            height = _height;
+
+            data = new Type [_height * _width]();
         }
 };
